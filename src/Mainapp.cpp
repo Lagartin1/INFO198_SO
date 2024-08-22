@@ -1,6 +1,6 @@
-#include "../include/UserTools.h"
-#include "../include/NumTools.h"
-#include "../include/Texttools.h"
+#include "NumTools.cpp"
+#include "TextTools.cpp"
+#include "UsersTools.cpp"
 #include <unistd.h>
 using namespace std;
 
