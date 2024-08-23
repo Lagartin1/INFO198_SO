@@ -1,4 +1,4 @@
-#include "../include/UserTools.h"
+#include "../include/UsersTools.h"
 
 void extractUsers(map <string,string> &users) {
     ifstream file("../Data/Users.csv");
@@ -16,4 +16,12 @@ void extractUsers(map <string,string> &users) {
         users[user] = pass;
     }
     file.close();
+}
+
+void borrarConsola(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }

@@ -3,5 +3,8 @@
 using namespace std;
 
 
-void averageAndSumVector(vector <int> v);
+void averageAndSumVector(vector <int> &v);
 void calculateFunc(int n);
+void calculateFunc(float n);
+void imprimirVector(vector<int> &v);
+void rellenarVector(vector<int> &v, string vect);

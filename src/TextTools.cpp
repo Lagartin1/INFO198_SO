@@ -3,17 +3,17 @@
 
 void isPalindrome(string text) {
     int n = text.length();
-    bool isPalindrome = true;
+    bool isPalim = true;
     for (int i = 0; i < n / 2; i++) {
         if (text[i] != text[n - i - 1]) {
-            isPalindrome = false;
+            isPalim = false;
             break;
         }
     }
-    if (isPalindrome) {
-        cout << "El string" << text <<" es un palindoromo" << endl;
+    if (isPalim) {
+        cout << "El string " << '"'<< text <<'"' <<" es un palindoromo" << endl;
     } else {
-        cout <<"El string "<< text <<"palindoromo" << endl;
+        cout <<"El string "<< '"'<< text <<'"' <<"No es palindoromo" << endl;
     }
 }
 
@@ -25,7 +25,7 @@ void countVocals(string text){
             c++;
         }
     }
-    cout << "El texo "<<text << "contiene " << c << "vocales" << endl;
+    cout << "El texo "<< '"' <<text << '"' << " contiene " << c << " vocales" << endl;
 }
 
 
@@ -38,5 +38,5 @@ void countLetters(string text){
             c++;
         }
     }
-    cout << "El texto "<<text << "contiene " << c << "letras" << endl;    
+    cout << "El texto " << '"'<<text << '"' << " contiene " << c << " letras" << endl;    
 }
