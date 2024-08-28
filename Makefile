@@ -6,10 +6,13 @@ BIN_DIR = bin/
 SRC_DIR = src/
 
 
-all: clean app
+all: clean mkdir app
 
 app:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app $(SRC_DIR)MainApp.cpp
 
+mkdir:
+	mkdir -p $(BIN_DIR)
+
 clean:
-	rm -rf $(OBJ_DIR)/*.o $(EXEC)
+	rm -rf $(BIN_DIR)*
