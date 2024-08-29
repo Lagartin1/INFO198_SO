@@ -2,18 +2,22 @@
 
 
 void isPalindrome(string text) {
-    int n = text.length();
+    string cleanText;
+    for (char c : text)  if(!isspace(c)) cleanText += tolower(c);
     bool isPalim = true;
-    for (int i = 0; i < n / 2; i++) {
-        if (text[i] != text[n - i - 1]) {
+    int r = cleanText.length();
+    int l = 0;
+    while (l<r){
+        if (cleanText[l] != cleanText[r-1]){
             isPalim = false;
             break;
         }
+        l++;r--;
     }
     if (isPalim) {
-        cout << "El string " << '"'<< text <<'"' <<" es un palindoromo" << endl;
+        cout << "El string \"" << text << "\" es un palíndromo" << endl;
     } else {
-        cout <<"El string "<< '"'<< text <<'"' <<"No es palindoromo" << endl;
+        cout << "El string \"" << text << "\" no es un palíndromo" << endl;
     }
 }
 
@@ -31,12 +35,18 @@ void countVocals(string text){
 
 void countLetters(string text){
     int n = text.length();
-    string abcdario = "abcdefghijklmnopqrstuvwxyz";
     int c = 0;
     for (int i = 0; i < n; i++) {
-        if (abcdario.find(tolower(text[i])) != string::npos) {
+        if (isalpha(text[i])) {
             c++;
         }
     }
     cout << "El texto " << '"'<<text << '"' << " contiene " << c << " letras" << endl;    
+}
+void borrarConsola(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }

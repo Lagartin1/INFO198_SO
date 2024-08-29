@@ -1,10 +1,6 @@
-#include "MenuControls.cpp"
+#include "../include/MainApp.h"
 
-#include <unistd.h>
-using namespace std;
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     int opt;
     string user, pass, text, vect, num;
     map<string, string> users;
@@ -33,15 +29,32 @@ int main(int argc, char *argv[])
         cout << "Error: Debe ingresar un usuario y contraseña" << endl;
         exit(EXIT_FAILURE);
     }
+   
     extractUsers(users);
-    if (users.find(user) != users.end() && users[user] == pass)
-    {
+    cout << "\n";
+    if (text.empty()){
+        cout << "Error: No ingresó un texto,no podra utilizar algunas de las opciones" << endl;
+    }else{
+        verificarTexto(text);
+    }
+    if (vect.empty()){
+        cout << "Error: No ingresó un vector,no podra utilizar algunas de las opciones" << endl;
+    }else{
+        verificarVector(vect);
+    }
+    if(num.empty()){
+        cout << "Error: No ingresó un numero,no podra utilizar algunas de las opciones" << endl;
+    }else{
+        verificarNumero(num);
+    }
+    cout << "\n";
+    cout << "=========================================="<<endl;
+    if (verificarUsuario(user, pass, users)){
         // lanzar menu
         cout << " Bienvenido " << user << endl;
         menu(text, vect, num, user);
     }
-    else
-    {
+    else{
         cout << "Error: Usuario o contraseña incorrectos" << endl;
         exit(EXIT_FAILURE);
     }

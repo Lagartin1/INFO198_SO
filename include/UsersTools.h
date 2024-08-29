@@ -7,5 +7,5 @@
 using namespace std;
 
 void extractUsers(map <string,string> &users);
-void borrarConsola();
-void imprimirVector(vector<int> &v);
+bool verificarUsuario(string user, string pass,map<string,string> &users);
+

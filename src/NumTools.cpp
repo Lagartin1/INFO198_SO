@@ -1,26 +1,26 @@
 #include "../include/NumTools.h"
 
-void rellenarVector(vector<int> &v, string vect){
-    //cout << "Vect: " << vect << endl;
-    if (!vect.empty()){
-        string numbers ="0123456789";
-        string cache = "";
-        int l = vect.length();
-        for (int i = 0; i < l; i++){
-            if (vect[i] == ';'){
-                int number = stoi(cache);
-                v.push_back(number);
-                cache = "";
-            }else if (numbers.find(vect[i]) == string::npos){
-                cout << "Error: El vector solo puede contener numeros enteros y estar separado por ;" << endl;
-                exit(EXIT_FAILURE);
-            }else{
-                cache += vect[i];
-            }
-        }
-    }
+
+
+void operarVector(string vect){
+    vector<int> v;
+    rellenarVector(v, vect);
+    averageAndSumVector(v);
 }
 
+void rellenarVector(vector<int> &v, string vect){
+    string cache = "";
+    int l = vect.length();
+    for (int i = 0; i < l; i++){
+        if (vect[i] == ';'){
+            int number = stoi(cache);
+            v.push_back(number);
+            cache = "";
+        }else{
+            cache += vect[i];
+        }
+    }    
+}
 
 
 void averageAndSumVector(vector <int> &v){
