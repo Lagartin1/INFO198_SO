@@ -31,26 +31,33 @@ int main(int argc, char *argv[]){
     }
    
     extractUsers(users);
+    int c = 0;
     cout << "\n";
     if (text.empty()){
         cout << "Error: No ingresó un texto,no podra utilizar algunas de las opciones" << endl;
+        c++;
     }else{
         verificarTexto(text);
     }
     if (vect.empty()){
         cout << "Error: No ingresó un vector,no podra utilizar algunas de las opciones" << endl;
+        c++;
     }else{
         verificarVector(vect);
     }
     if(num.empty()){
         cout << "Error: No ingresó un numero,no podra utilizar algunas de las opciones" << endl;
+        c++;
     }else{
         verificarNumero(num);
+    }
+    if (c >=3 ){
+        cout << "\nError: No ingresó los parametros requeridos (<texto>  <lista de numeros enteros> <numero entero> ) para la ejecucion" << endl;
+        exit(EXIT_FAILURE);
     }
     cout << "\n";
     cout << "=========================================="<<endl;
     if (verificarUsuario(user, pass, users)){
-        // lanzar menu
         cout << " Bienvenido " << user << endl;
         menu(text, vect, num, user);
     }

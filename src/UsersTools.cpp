@@ -1,14 +1,13 @@
 #include "../include/UsersTools.h"
 
 void extractUsers(map <string,string> &users) {
-
     const char* csvFilePath = getenv("CSV_FILE_PATH");
 
     if (csvFilePath == nullptr) {
-        cerr << "Error: la variable de entorno CSV_FILE_PATH no está configurada." << endl;
+        cout << "Error: la variable de entorno CSV_FILE_PATH no está configurada." << endl;
+        cout << "Configure la variable de entorno CSV_FILE_PATH con la ruta del archivo csv, de la forma especificada en el archvio README.md" << endl;
         exit(EXIT_FAILURE);
     }
-    cout << "Leyendo archivo: " << csvFilePath << endl;
     ifstream file(csvFilePath);
     if (!file.is_open()) {
         cout << "Error: No se pudo abrir el archivo" << std::endl;
@@ -26,14 +25,13 @@ void extractUsers(map <string,string> &users) {
     file.close();
 }
 
-
 bool verificarUsuario(string user, string pass, map<string,string> &users){
     // Usuario con menos de 3 letras
     if (user.length() < 3) {
         cout << "Error: El usuario debe tener al menos 3 letras" << endl;
         return false; 
     }
-    // pass con menos de 6 letras 
+    // pass con menos de 6 caracteres
     if (pass.length() < 6) {
         return false;
     }

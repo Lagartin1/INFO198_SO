@@ -14,7 +14,7 @@ void menu(string& text, string v, string& num, string user) {
         cout << "5. Calcular una f(x)=5x*x + 1/x" << endl;
         cout << "6. Salir" << endl;
         cout << "Ingrese una opcion: ";
-        cin >> option;
+        getline(cin, option);
         if (option == "1") {
             if (!text.empty()) {
                 cout<< "\n" <<endl;
@@ -71,7 +71,6 @@ void menu(string& text, string v, string& num, string user) {
         }
         cout << "\nPresione enter para continuar" << endl;
         cin.ignore();
-        cin.get();
         borrarConsola();
     }
 }
