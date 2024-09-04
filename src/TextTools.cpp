@@ -25,7 +25,8 @@ void countVocals(string text){
     int n = text.length();
     int c = 0;
     for (int i = 0; i < n; i++) {
-        if (text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' || text[i] == 'u') {
+        char cI = tolower(text[i]);
+        if (cI == 'a' || cI == 'e' || cI == 'i' || cI == 'o' || cI == 'u') {
             c++;
         }
     }
