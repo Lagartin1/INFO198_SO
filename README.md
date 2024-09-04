@@ -16,9 +16,8 @@ Para compilar este programa en C++, se necesitan los siguientes elementos:
 ## Instalacion / Compilacion
 Para compilar el programa, sigue los siguientes pasos:
 
-1. Asegúrate de tener un compilador de C++ instalado, como `g++`.
-2. Navega al directorio raíz del proyecto donde se encuentra el `Makefile`.
-3. Ejecuta el siguiente comando en la terminal:
+1. Navega al directorio raíz del proyecto donde se encuentra el `Makefile`.
+2. Ejecuta el siguiente comando en la terminal:
 
    ```bash
    make
