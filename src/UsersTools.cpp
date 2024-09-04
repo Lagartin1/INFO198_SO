@@ -11,7 +11,7 @@ void extractUsers(map <string,string> &users) {
     ifstream file(csvFilePath);
     if (!file.is_open()) {
         cout << "Error: No se pudo abrir el archivo" << std::endl;
-        cout << "Verifique que existe el archvio Users.csv y que la variable de entorno CSV_FILE_PATH este correctamente configurada" << endl;
+        cout << "Verifique que existe el archivo Users.csv y que la variable de entorno CSV_FILE_PATH este correctamente configurada" << endl;
         exit(EXIT_FAILURE);
     }
     string lines;

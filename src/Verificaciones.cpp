@@ -25,19 +25,17 @@ void verificarNumero(string num){
 void verificarTexto(string text){
     int n = text.length();
     if (n == 0) {
-        cout << "Error: El texto ingresado esta vacio" << endl;
+        cout << "Error: La frase ingresada esta vacia" << endl;
         exit(EXIT_FAILURE);
-    }
-    for (int i = 0; i < n; i++) {
-        if (!isalpha(text[i]) && text[i] != ' ') {
-            cout << "Error: El texto ingresado no es un texto valido, solo puede contener letras y espacios" << endl;
-            exit(EXIT_FAILURE);
-        }
     }
 }
 
 void verificarVector(string vect){
     int n = vect.length();
+    if ( n == 0) {
+        cout << "Error: El vector ingresado esta vacio" << endl;
+        exit(EXIT_FAILURE);
+    }
     for (int i = 0; i < n; i++) {
         if (!isdigit(vect[i]) && vect[i] != ';') {
             cout << "Error: El vector ingresado no es valido, solo puede contener numeros enteros separados por punto y coma (;)" << endl;
@@ -50,7 +48,7 @@ void verificarEntradadas(string text, string vect, string num){
     int c = 0;
     cout << "\n";
     if (text.empty()){
-        cout << "Precaución: No ingresó un texto,algunas opciones no estarán disponibles" << endl;
+        cout << "Precaución: No ingresó una frase,algunas opciones no estarán disponibles" << endl;
         c++;
     }else{
         verificarTexto(text);
