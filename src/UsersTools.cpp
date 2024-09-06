@@ -105,8 +105,7 @@ void addUserData(string user, string pass, string tipo){
     //agregar a archivo 
     ofstream file(getenv("TXT_FILE_PATH"), ios::app);
     file << user << ";" << pass << ";" << tipo << endl;
-    file.close();    
-    cout << "Usuario agregado exitosamente" << endl;
+    file.close();
 }
 
 
@@ -131,6 +130,7 @@ void addUser(map <string,Usuario> &users){
         cout << "Ingrese el tipo de usuario(Admin(A) / Comun(C) ): ";
         cin >> eleccion;
     }
+    cin.ignore();  // Ignorar el salto de línea para el proximo cin
     if( tolower(eleccion) == 'a'){
         tipo = "Admin";
     }else{
