@@ -106,11 +106,13 @@ void addUserData(string user, string pass, string tipo){
     ofstream file(getenv("TXT_FILE_PATH"), ios::app);
     file << user << ";" << pass << ";" << tipo << endl;
     file.close();    
+    cout << "Usuario agregado exitosamente" << endl;
 }
 
 
 void addUser(map <string,Usuario> &users){
     string user, pass, tipo;
+    char eleccion;
     cout << "Ingrese el nombre de usuario: ";
     getline(cin, user);
     while (! verificarUsuarioNuevo(user)){
@@ -124,10 +126,15 @@ void addUser(map <string,Usuario> &users){
         getline(cin, pass);
     }
     cout << "Ingrese el tipo de usuario(Admin(A) / Comun(C) ): ";
-    getline(cin, tipo);
-    while (tipo != "A" && tipo != "C"){
-        cout << "Ingrese el tipo de usuario: ";
-        getline(cin, tipo);
+    cin >> eleccion;
+    while ( tolower(eleccion) != 'a' && tolower(eleccion)  != 'c') {
+        cout << "Ingrese el tipo de usuario(Admin(A) / Comun(C) ): ";
+        cin >> eleccion;
+    }
+    if( tolower(eleccion) == 'a'){
+        tipo = "Admin";
+    }else{
+        tipo = "Usuario Comun";
     }
     users[user] = Usuario(user, pass, tipo);
     //agregar a archivo 
@@ -159,14 +166,10 @@ bool deleteUserData(string user){
 
     file.close();
     temp.close();
-    remove("temp.txt");  // Limpiar el archivo temporal
-    // Eliminar el archivo original y renombrar el temporal
-    if (remove(filePath) != 0) {
-        cout << "Error: No se pudo eliminar el archivo original." << endl;
-        return false; 
-    }
-    if (rename("temp.txt", filePath) != 0) {
-        cout << "Error: No se pudo renombrar el archivo temporal." << endl;
+    // Reemplazar el archivo original con el archivo temporal
+    if (rename("temp.txt",filePath) != 0) {
+        cerr << "Error: No se pudo eliminar el archivo original." << endl;
+        return false;
     }
     return true;
 }
@@ -177,6 +180,10 @@ void deleteUser(map <string,Usuario> &users){
     cout << "Ingrese el nombre de usuario a eliminar: ";
     getline(cin, user);
     if (users.find(user) != users.end()){
+        if(users[user].getTipo() == "Admin"){
+            cout << "Error: No se puede eliminar un usuario administrador" << endl;
+            return;
+        }else{
         users.erase(user);
         //actualizar archivo
         if (!deleteUserData(user)) {
@@ -185,6 +192,8 @@ void deleteUser(map <string,Usuario> &users){
         }else{
             cout << "Usuario eliminado exitosamente" << endl;
         }
+        }
+        
     }else{
         cout << "Error: El usuario no existe" << endl;
     }

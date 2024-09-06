@@ -74,19 +74,19 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             else{
                 cout << "\nOpcion no valida,no ha ingresado un numero" << endl;
             }
-        }
-        else if (option == "0") {
-            cout << "Adios " << user.getUser() << endl;
-            exit(EXIT_SUCCESS);
         }else if (option == "6" && isAdmin){
             cout<< "\n" <<endl;
             listUsers(users);
         }else if (option == "7" && isAdmin){
             cout<< "\n" <<endl;
             addUser(users);
+            cout<< "\n" <<endl;
         }else if (option == "8" && isAdmin){
             cout<< "\n" <<endl;
             deleteUser(users);
+        }else if (option == "0") {
+            cout << "Adios " << user.getUser() << endl;
+            exit(EXIT_SUCCESS);
         }
         else{
             borrarConsola();
