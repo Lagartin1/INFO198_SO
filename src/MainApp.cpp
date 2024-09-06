@@ -1,9 +1,10 @@
 #include "../include/MainApp.h"
+#include "MenuControls.cpp"
 
 int main(int argc, char *argv[]){
     int opt;
     string user, pass, text, vect, num;
-    map<string, string> users;
+    map<string, Usuario> users;
 
     while ((opt = getopt(argc, argv, "u:p:t:v:n:")) != -1){
         switch (opt)
@@ -36,7 +37,8 @@ int main(int argc, char *argv[]){
     cout << "=========================================="<<endl;
     if (verificarUsuario(user, pass, users)){
         cout << " Bienvenido " << user << endl;
-        menu(text, vect, num, user);
+        Usuario u = users[user];
+        menu(text, vect, num,u,users);
     }
     else{
         cout << "Error: Usuario o contraseña incorrectos" << endl;
