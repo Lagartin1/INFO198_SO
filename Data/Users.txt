@@ -1,10 +1,10 @@
 usuario;pass123;Admin
-juan;abc789;Usuario Comun
-maria;654321;Usuario Comun
+juan;abc789;Usuario Generico
+maria;654321;Usuario Generico
 carlos;xyz987;Admin
 ursular;hola1234;Admin
 adminad;ada123456;Admin
-nuevoU;uuuu1234;Usuario Comun
+nuevoU;uuuu1234;Usuario Generico
 holasss;hola123;Admin
 holapp;hola1234;Admin
 holaaaa;holaaaaa4;Admin

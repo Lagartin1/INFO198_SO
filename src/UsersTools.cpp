@@ -124,17 +124,17 @@ void addUser(map <string,Usuario> &users){
         cout << "Ingrese la contraseña: ";
         getline(cin, pass);
     }
-    cout << "Ingrese el tipo de usuario(Admin(A) / Comun(C) ): ";
+    cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G) ): ";
     cin >> eleccion;
-    while ( tolower(eleccion) != 'a' && tolower(eleccion)  != 'c') {
-        cout << "Ingrese el tipo de usuario(Admin(A) / Comun(C) ): ";
+    while ( tolower(eleccion) != 'a' && tolower(eleccion)  != 'g') {
+        cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G) ): ";
         cin >> eleccion;
     }
     cin.ignore();  // Ignorar el salto de línea para el proximo cin
     if( tolower(eleccion) == 'a'){
         tipo = "Admin";
     }else{
-        tipo = "Usuario Comun";
+        tipo = "Usuario Generico";
     }
     users[user] = Usuario(user, pass, tipo);
     //agregar a archivo 
