@@ -30,10 +30,10 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
    ```bash
    cd bin/
 2. Asegure tener cargada la variable de entorno CSV_FILE_PATH que contiene los datos de ingreso.
-   Debes obtener la ruta al archivo ` Users.csv` precente en el directorio  `/Data` de este programa,y cargarlo a las varibales de entorno.
+   Debes obtener la ruta al archivo ` Users.txt` precente en el directorio  `/Data` de este programa,y cargarlo a las varibales de entorno.
     * Para Linux/MacOS (bash) debe ser de la forma:
         ```bash
-        export CSV_FILE_PATH="/ruta/al/archivo/Users.csv"
+        export TXT_FILE_PATH="/ruta/al/archivo/Users.txt"
         ```
 
 3. Ejecuta el programa proporcionando los argumentos necesarios. El formato general es:
