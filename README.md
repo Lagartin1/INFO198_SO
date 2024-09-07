@@ -55,3 +55,4 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
 ```bash
 ./app -u usuario -p micontraseña -t "Hola Mundo" -v "6;7;2;9;5" -n 30
 ```
+

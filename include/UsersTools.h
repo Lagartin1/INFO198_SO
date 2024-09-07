@@ -8,7 +8,7 @@
 using namespace std;
 
 void extractUsers(map <string,Usuario> &users);
-bool verificarUsuario(string user, string pass,map<string,Usuario> &users);
+void verificarUsuario(string user, string pass);
 void extractUsers(map<string, Usuario> &users);
 void listUsers(map <string,Usuario> &users);
 void addUserData(string user, string pass, string tipo);

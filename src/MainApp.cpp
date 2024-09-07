@@ -35,8 +35,11 @@ int main(int argc, char *argv[]){
     verificarEntradadas(text, vect, num);
     cout << "\n";
     cout << "=========================================="<<endl;
-    if (verificarUsuario(user, pass, users)){
-        cout << " Bienvenido " << user << endl;
+    // verificacion si usuario y contraseña es correcto 
+    verificarUsuario(user, pass);
+    if (users.find(user) != users.end() && users[user].getPass() == pass){
+        cout << "Bienvenido \n" << "Usuario: "<<user <<" Rol: " << users[user].getTipo() <<endl;
+        printf("PID: %d\n", getpid());
         Usuario u = users[user];
         menu(text, vect, num,u,users);
     }

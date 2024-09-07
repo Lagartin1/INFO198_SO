@@ -48,25 +48,20 @@ void verificarEntradadas(string text, string vect, string num){
     int c = 0;
     cout << "\n";
     if (text.empty()){
-        cout << "Precaución: No ingresó una frase,algunas opciones no estarán disponibles" << endl;
+        cout << "Error: No se ingreso una frase" << endl;
         c++;
-    }else{
-        verificarTexto(text);
     }
-    if (vect.empty()){
-        cout << "Precaución: No ingresó un vector,algunas opciones no estarán disponibles" << endl;
+    if(vect.empty()){
+        cout << "Error: No se ingreso un vector" << endl;
         c++;
-    }else{
-        verificarVector(vect);
     }
     if(num.empty()){
-        cout << "Precaución: No ingresó un numero,algunas opciones no estarán disponibles" << endl;
+        cout << "Error: No se ingreso un numero" << endl;
         c++;
-    }else{
-        verificarNumero(num);
     }
-    if (c >=3 ){
-        cout << "\nError: No se ingresaron los parámetros necesarios. El programa no puede continuar." << endl;
+    if (c>0){
         exit(EXIT_FAILURE);
     }
+    return;
+    
 }

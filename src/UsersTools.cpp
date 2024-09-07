@@ -1,4 +1,5 @@
 #include "../include/UsersTools.h"
+#include "../include/TextTools.h"
 
 void extractUsers(map <string,Usuario> &users) {
     const char* txtFilePath = getenv("TXT_FILE_PATH");
@@ -27,9 +28,9 @@ void extractUsers(map <string,Usuario> &users) {
     file.close();
 }
 
-bool verificarUsuario(string user, string pass, map<string,Usuario> &users){
+void verificarUsuario(string user, string pass){
     // Usuario con menos de 3 letras
-    if (user.length() < 3) {
+    if (user.length() <= 3) {
         cout << "Error: El usuario debe tener al menos 3 letras" << endl;
         exit(EXIT_FAILURE); 
     }
@@ -52,11 +53,6 @@ bool verificarUsuario(string user, string pass, map<string,Usuario> &users){
             exit(EXIT_FAILURE); 
         }
     }
-    // verificacion si usuario y contraseña es correcto 
-    if (users.find(user) != users.end() && users[user].getPass() == pass){
-        return true;
-    }
-    return false;
 }
 
 void listUsers(map <string,Usuario> &users){
@@ -177,25 +173,34 @@ bool deleteUserData(string user){
 
 void deleteUser(map <string,Usuario> &users){
     string user;
-    cout << "Ingrese el nombre de usuario a eliminar: ";
-    getline(cin, user);
-    if (users.find(user) != users.end()){
-        if(users[user].getTipo() == "Admin"){
-            cout << "Error: No se puede eliminar un usuario administrador" << endl;
-            return;
-        }else{
-        users.erase(user);
-        //actualizar archivo
-        if (!deleteUserData(user)) {
-            cout << "Error: No se pudo eliminar el usuario" << endl;
+    while (true){
+        cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
+        getline(cin, user);
+        if ( user.length() == 1 && tolower(user[0]) == 'l'){
+            listUsers(users);
+            cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
+            getline(cin, user);
+        }
+        if (users.find(user) != users.end()){
+            if(users[user].getTipo() == "Admin"){
+                cout << "\nError: No se puede eliminar un usuario administrador" << endl;
+                return;
+            }else{
+            users.erase(user);
+            //actualizar archivo
+            if (!deleteUserData(user)) {
+                cout << "Error: No se pudo eliminar el usuario" << endl;
+                return;
+            }else{
+                cout << "Usuario eliminado exitosamente" << endl;
+                return;
+            }
+            }
             
         }else{
-            cout << "Usuario eliminado exitosamente" << endl;
+            borrarConsola();
+            cout << "Error: El usuario '"<< user << "' no existe" << endl;
         }
-        }
-        
-    }else{
-        cout << "Error: El usuario no existe" << endl;
     }
 }
 
