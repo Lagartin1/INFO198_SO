@@ -21,10 +21,11 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
         cout << "3. Contar letras de un string " << endl;
         cout << "4. Calcular promedio y sumatoria de un vector" << endl;
         cout << "5. Calcular una f(x)=5x*x + 1/x" << endl;
+        cout << "6. Contar palabras" << endl;
         if (isAdmin){
-            cout << "6. Listar usuarios" << endl;
-            cout << "7. Agregar usuario" << endl;
-            cout << "8. Eliminar usuario" << endl;
+            cout << "7. Listar usuarios" << endl;
+            cout << "8. Agregar usuario" << endl;
+            cout << "9. Eliminar usuario" << endl;
         }
         cout << "Ingrese una opcion: ";
         getline(cin, option);
@@ -52,13 +53,19 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             }else{
                 calculateFunc(static_cast<int> (stoi(num)));
             }
-        }else if(option == "6" && isAdmin){
+        }else if (option == "6") {
+            cout<< "\n" <<endl;
+            int res = system("./app2");
+            if (res != 0){
+                cout << "Error al ejecutar el programa" << endl;
+            }
+        }else if(option == "7" && isAdmin){
             cout<< "\n" <<endl;
             listUsers(users);
-        }else if (option == "7" && isAdmin){
+        }else if (option == "8" && isAdmin){
             cout<< "\n" <<endl;
             addUser(users);
-        }else if (option == "8" && isAdmin){
+        }else if (option == "9" && isAdmin){
             cout<< "\n" <<endl;
             deleteUser(users);
         }else{
