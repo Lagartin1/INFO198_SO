@@ -21,32 +21,7 @@ void contarPalabrasTotalesEnCarpeta(const string& carpetaEntrada, const fs::path
         return;
     }
 
-    map<string, int> contadorPalabras;
-    string palabra;
-
-
-    for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
-        if (entry.path().extension() == ".txt") {  
-            ifstream inFile(entry.path());
-            if (!inFile) {
-                cerr << "Error al abrir el archivo de entrada: " << entry.path() << endl;
-                continue;
-            }
-            // Contar las palabras del archivo actual
-            while (inFile >> palabra) {
-                ++contadorPalabras[palabra];
-            }
-        }
-    }
-
-
-    for (const auto& entry : contadorPalabras) {
-        outFile << entry.first << ";" << entry.second << endl;
-    }
-
-    cout << "Archivo de salida: " << archivoSalida << " procesado. Conteo total de palabras guardado." << endl;
 }
-
 void procesar(const string& extension, const string& carpetaEntrada, const string& carpetaSalida) {
     for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
         if (entry.path().extension() == extension) {
@@ -100,16 +75,31 @@ int main() {
     int opcion;
 
     do {
-        cin.clear();
-        cout << "Seleccione una opcion:" << endl;
-        cout << "(0) Salir" << endl;
-        cout << "(1) Ingrese la extension de archivos a procesar (ej: .txt)" << endl;
-        cout << "(2) Ingrese el path de la carpeta de entrada (ej: /home)" << endl;
-        cout << "(3) Ingrese el path de la carpeta de salida (ej: /home)" << endl;
-        cout << "(4) Procesar" << endl;
-        cout << "Opción: ";
-        cin >> opcion;
-        cin.ignore();
+        while (true) {
+            try {
+                cout << "Seleccione una opcion:" << endl;
+                cout << "(0) Salir" << endl;
+                cout << "(1) Ingrese la extension de archivos a procesar (ej: .txt)" << endl;
+                cout << "(2) Ingrese el path de la carpeta de entrada (ej: /home)" << endl;
+                cout << "(3) Ingrese el path de la carpeta de salida (ej: /home)" << endl;
+                cout << "(4) Procesar" << endl;
+                cout << "Opción: ";
+                cin >> opcion;
+
+                if (cin.fail()) {
+
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    
+                    throw runtime_error("Entrada no válida. Por favor, ingrese un número entero.");
+                }
+                cin.ignore();
+                break;
+            } catch (const runtime_error& e) {
+            
+                cout << e.what() << endl;
+            }
+        }
         switch (opcion) {
             case 1:
                 cout << "Ingrese la extension de archivos a procesar (ej: .txt): ";
@@ -158,7 +148,7 @@ int main() {
             
         }
 
-    } while (opcion != 0);
+    } while (opcion != 0 ) ;
 
     return 0;
 }
