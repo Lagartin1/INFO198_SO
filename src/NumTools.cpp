@@ -37,7 +37,7 @@ void averageAndSumVector(vector <int> &v){
 
 void calculateFunc(int n){
     if (n != 0){
-        cout << "El resultado de la funcion es: " << 5*n*n + 1/n << endl;
+        cout << "El resultado de la funcion evaluada en "<< n <<" es: " << 5*n*n + 1/n << endl;
     } else {
         cout << "Error: Divicion por 0\n"<< endl;
     }
@@ -45,7 +45,7 @@ void calculateFunc(int n){
 
 void calculateFunc(float n){
     if (n != 0){
-        cout << "El resultado de la funcion es: " << 5*n*n + 1/n << endl;
+        cout << "El resultado de la funcion evaluada en " << n <<"es: " << 5*n*n + 1/n << endl;
     } else {
         cout << "Error: Divicion por 0\n"<< endl;
         

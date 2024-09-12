@@ -15,9 +15,9 @@ void isPalindrome(string text) {
         l++;r--;
     }
     if (isPalim) {
-        cout << "El string \"" << text << "\" es un palíndromo" << endl;
+        cout << "El texto \"" << text << "\" es un palíndromo" << endl;
     } else {
-        cout << "El string \"" << text << "\" no es un palíndromo" << endl;
+        cout << "El texto \"" << text << "\" no es un palíndromo" << endl;
     }
 }
 
@@ -30,6 +30,7 @@ void countVocals(string text){
             c++;
         }
     }
+    cout << endl;
     cout << "El texo "<< '"' <<text << '"' << " contiene " << c << " vocales" << endl;
 }
 
