@@ -14,14 +14,6 @@ bool archivosConExtensionExisten(const string& extension, const string& carpeta)
     return false;
 }
 
-void contarPalabrasTotalesEnCarpeta(const string& carpetaEntrada, const fs::path& archivoSalida) {
-    ofstream outFile(archivoSalida, ios::app); 
-    if (!outFile) {
-        cerr << "Error al abrir el archivo de salida: " << archivoSalida << endl;
-        return;
-    }
-
-}
 void procesar(const string& extension, const string& carpetaEntrada, const string& carpetaSalida) {
     for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
         if (entry.path().extension() == extension) {
@@ -77,6 +69,8 @@ int main() {
     do {
         while (true) {
             try {
+                cout << "                Menu        " <<endl;
+                cout << "=============================================" <<endl;
                 cout << "Seleccione una opcion:" << endl;
                 cout << "(0) Salir" << endl;
                 cout << "(1) Ingrese la extension de archivos a procesar (ej: .txt)" << endl;
@@ -104,25 +98,35 @@ int main() {
             case 1:
                 cout << "Ingrese la extension de archivos a procesar (ej: .txt): ";
                 cin >> extension;
-                cin.ignore(); 
+                while (!extension.empty() && extension[0] != '.'){
+                    cin.clear();
+                    cout << "Error: La extensión ingresada debe ser de la forma '.<extencion> '(ej: .txt , .csv)" << endl;
+                    cout << "Ingrese la extension de archivos a procesar (ej: .txt): ";
+                    cin >> extension;
+                }
                 break;
 
             case 2:
                 cout << "Ingrese el path de la carpeta de entrada: ";
                 getline(cin, carpetaEntrada);
-                if (!carpetaExiste(carpetaEntrada)) {
+                while (!carpetaExiste(carpetaEntrada) ) {
                     cout << endl << "Error: La carpeta de entrada no existe." << endl << endl;
                     carpetaEntrada.clear(); 
+                    cin.clear();   
+                    cout << "Ingrese el path de la carpeta de entrada: ";
+                    getline(cin, carpetaEntrada);
                 }
-                cout << carpetaEntrada << endl;
                 break;
 
             case 3:
                 cout << "Ingrese el path de la carpeta de salida: ";
                 getline(cin, carpetaSalida);
-                if (!carpetaExiste(carpetaSalida)) {
+                while(!carpetaExiste(carpetaSalida)) {
                     cout << "Error: La carpeta de salida no existe." << endl;
                     carpetaSalida.clear(); 
+                    cin.clear();
+                    cout << "Ingrese el path de la carpeta de salida: ";
+                    getline(cin, carpetaSalida);
                 }
                 break;
 
@@ -133,8 +137,9 @@ int main() {
                 } else if (!archivosConExtensionExisten(extension, carpetaEntrada)) {
                     cout << "Error: No hay archivos con la extensión indicada en la carpeta de entrada." << endl;
                 } else {
+                    cout << "Procesando archivos...\n" << endl;
                     procesar(extension, carpetaEntrada, carpetaSalida);
-                    cout << "El proceso de conteo de palabras ha finalizado." << endl;
+                    cout << "El proceso de conteo de palabras ha finalizado.\n" << endl;
                 }
                 break;
 
@@ -147,6 +152,7 @@ int main() {
                 break;
             
         }
+        cout << "=============================================" <<endl;
 
     } while (opcion != 0 ) ;
 

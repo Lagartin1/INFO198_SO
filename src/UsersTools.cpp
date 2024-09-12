@@ -106,7 +106,7 @@ void addUserData(string user, string pass, string tipo){
 
 
 void addUser(map <string,Usuario> &users){
-    string user, pass, tipo;
+    string user, pass,pass2 ,tipo;
     char eleccion;
     cout << "Ingrese el nombre de usuario: ";
     getline(cin, user);
@@ -120,6 +120,20 @@ void addUser(map <string,Usuario> &users){
         cout << "Ingrese la contraseña: ";
         getline(cin, pass);
     }
+    cout << "Ingrese nuevamente la contraseña: ";
+    getline(cin, pass2);
+    while ( (verficarPassUsuarioNuevo(pass2) && (pass != pass2)) ){
+        cout << "Las contraseñas no coinciden" << endl;
+        cout << "Ingrese la contraseña: ";
+        getline(cin, pass);
+        while (! verficarPassUsuarioNuevo(pass)){
+            cout << "Ingrese la contraseña: ";
+            getline(cin, pass);
+        }
+        cout << "Ingrese nuevamente la contraseña: ";
+        getline(cin, pass2);
+    }
+
     cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G) ): ";
     cin >> eleccion;
     while ( tolower(eleccion) != 'a' && tolower(eleccion)  != 'g') {

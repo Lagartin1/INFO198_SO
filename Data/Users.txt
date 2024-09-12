@@ -3,8 +3,9 @@ juan;abc789;Usuario Generico
 carlos;xyz987;Admin
 ursula;hola1234;Usuario Generico
 adminad;ada123456;Admin
-nuevoU;uuuu1234;Usuario Generico
 holasss;hola123;Admin
 pepGuard;hola1234;Usuario Generico
 holaaaa;holaaaaa4;Admin
 pepito;pepito123;Usuario Generico
+whoiam;1pass23;Admin
+pepit;pass123;Usuario Generico
