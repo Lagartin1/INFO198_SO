@@ -1,0 +1,1 @@
+Ruta = \home\vicntea\INFO198_SO\Data

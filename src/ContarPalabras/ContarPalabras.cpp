@@ -1,61 +1,4 @@
-#include "../include/ContarPalabras.h"
-
-
-bool carpetaExiste(const string& path) {
-    return fs::exists(path) && fs::is_directory(path);
-}
-
-bool archivosConExtensionExisten(const string& extension, const string& carpeta) {
-    for (const auto& entry : fs::directory_iterator(carpeta)) {
-        if (entry.path().extension() == extension) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void procesar(const string& extension, const string& carpetaEntrada, const string& carpetaSalida) {
-    for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
-        if (entry.path().extension() == extension) {
-            procesarArchivo(carpetaEntrada,entry.path().filename(), carpetaSalida);
-        }
-    }
-}
-
-void procesarArchivo(string pathIN,string name, string pathOut){
-    ifstream file(pathIN+"/"+name);
-    map<string, int> palabras;
-    if (!file.is_open()) {
-        cout << "Error: No se pudo abrir el archivo" << endl;
-    }else{
-        //procesar cada linea del archivo y cada palabra
-        string line;
-        while (getline(file, line)) {
-            istringstream ss(line);
-            string palabra;
-            while (ss >> palabra) {
-                if (palabras.find(palabra) != palabras.end()){
-                    palabras[palabra] += 1;
-                }else{
-                    palabras[palabra] = 1;
-                }
-            }
-        }
-        file.close();
-        //escribir en el archivo de salida
-        ofstream outFile(pathOut+"/"+name);
-        if (!outFile.is_open()) {
-            cout << "Error: No se pudo abrir el archivo de salida" << endl;
-        }else{
-            for (auto const& item : palabras){
-                outFile << item.first << ";" << item.second << endl;
-            }
-            outFile.close();
-
-        }
-        cout << "Archivo " << pathIN <<"/" << name<< " ," << palabras.size()<< " palabras distintas" << endl;
-    }
-}
+#include "../../include/ContarPalabras.h"
 
 int main() {
     cout << "=============================================" <<endl;
@@ -109,20 +52,30 @@ int main() {
             case 2:
                 cout << "Ingrese el path de la carpeta de entrada: ";
                 getline(cin, carpetaEntrada);
-                while (!carpetaExiste(carpetaEntrada) ) {
-                    cout << endl << "Error: La carpeta de entrada no existe." << endl << endl;
+                while ((!carpetaExiste(carpetaEntrada)) || (carpetaEntrada ==carpetaSalida)) {
+                    if ((carpetaEntrada ==carpetaSalida)){
+                        cout << endl << "Error: La carpeta de entrada es la misma que la de salida" << endl << endl;
+                    }
+                    else{cout << endl << "Error: La carpeta de entrada no existe." << endl << endl;
+                    }
+                    
                     carpetaEntrada.clear(); 
                     cin.clear();   
                     cout << "Ingrese el path de la carpeta de entrada: ";
                     getline(cin, carpetaEntrada);
+                    
                 }
+                ;
                 break;
 
             case 3:
                 cout << "Ingrese el path de la carpeta de salida: ";
                 getline(cin, carpetaSalida);
-                while(!carpetaExiste(carpetaSalida)) {
-                    cout << "Error: La carpeta de salida no existe." << endl;
+                while((!carpetaExiste(carpetaSalida)) || (carpetaEntrada == carpetaSalida) ) {
+                    if ((carpetaEntrada ==carpetaSalida)){
+                        cout << endl << "Error: La carpeta de salida es la misma que la de entrada" << endl << endl;
+                    }
+                    else{cout << "Error: La carpeta de salida no existe." << endl;}
                     carpetaSalida.clear(); 
                     cin.clear();
                     cout << "Ingrese el path de la carpeta de salida: ";
