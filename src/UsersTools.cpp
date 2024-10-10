@@ -1,25 +1,21 @@
 #include "../include/UsersTools.h"
 #include "../include/TextTools.h"
 
-void extractUsers(map <string,Usuario> &users) {
-    const char* txtFilePath = getenv("TXT_FILE_PATH");
+void extractUsers(map<string, Usuario> &users) {
+    const char* txtFilePath = "../Data/Users.txt";  // Ruta directa al archivo
 
-    if (txtFilePath == nullptr) {
-        cout << "Error: la variable de entorno TXT_FILE_PATH no está configurada." << endl;
-        cout << "Configure la variable de entorno TXT_FILE_PATH con la ruta del archivo csv, de la forma especificada en el archvio README.md" << endl;
-        exit(EXIT_FAILURE);
-    }
     ifstream file(txtFilePath);
     if (!file.is_open()) {
         cout << "Error: No se pudo abrir el archivo" << std::endl;
-        cout << "Verifique que existe el archivo Users.csv y que la variable de entorno CSV_FILE_PATH este correctamente configurada" << endl;
+        cout << "Verifique que existe el archivo Users.txt en la carpeta Data" << endl;
         exit(EXIT_FAILURE);
     }
+
     string lines;
     while (getline(file, lines)) {
         // lineas de la forma user;pass
         stringstream line(lines);
-        string user, pass,tipo;
+        string user, pass, tipo;
         getline(line, user, ';');
         getline(line, pass, ';');
         getline(line, tipo, ';');
@@ -55,17 +51,16 @@ void verificarUsuario(string user, string pass){
     }
 }
 
-void listUsers(map <string,Usuario> &users){
-    cout << "=========================================="<<endl;
+void listUsers(map<string, Usuario> &users) {
+    cout << "==========================================" << endl;
     cout << "           Lista de usuarios" << endl;
     cout << "==========================================" << endl;
-    for (auto const& x : users){
-        cout << "Usuario: " << x.first << " Rol: "<<users[x.first].getTipo() << endl;
+    for (auto const& x : users) {
+        cout << "Usuario: " << x.first << " Rol: " << users[x.first].getTipo() << endl;
     }
 }
 
-
-bool verificarUsuarioNuevo(string user){
+bool verificarUsuarioNuevo(string user) {
     // Usuario con menos de 3 letras
     if (user.length() < 3) {
         cout << "Error: El usuario debe tener al menos 3 letras" << endl;
@@ -81,52 +76,59 @@ bool verificarUsuarioNuevo(string user){
     return true;
 }
 
-bool verficarPassUsuarioNuevo(string pass){
+bool verficarPassUsuarioNuevo(string pass) {
     // pass con menos de 6 caracteres
     if (pass.length() < 6) {
-        cout << "Error: La contraseña debe tener almenos 6 caracteres" << endl;
+        cout << "Error: La contraseña debe tener al menos 6 caracteres" << endl;
         return false; 
     }
     // pass contiene caracteres que no son letras ni números   
     for (char c : pass) {
         if (!isalnum(c)) {
-            cout << "Error: La contraseña solo puede contener letras y/o numeros" << endl;
+            cout << "Error: La contraseña solo puede contener letras y/o números" << endl;
             return false; 
         }
     }
     return true;
 }
 
-void addUserData(string user, string pass, string tipo){
-    //agregar a archivo 
-    ofstream file(getenv("TXT_FILE_PATH"), ios::app);
+void addUserData(string user, string pass, string tipo) {
+    const char* txtFilePath = "../Data/Users.txt";  // Ruta directa al archivo
+
+    ofstream file(txtFilePath, ios::app);
+    if (!file.is_open()) {
+        cout << "Error: No se pudo abrir el archivo para agregar datos" << std::endl;
+        return;
+    }
     file << user << ";" << pass << ";" << tipo << endl;
     file.close();
 }
 
-
-void addUser(map <string,Usuario> &users){
-    string user, pass,pass2 ,tipo;
+void addUser(map<string, Usuario> &users) {
+    string user, pass, pass2, tipo;
     char eleccion;
+
     cout << "Ingrese el nombre de usuario: ";
     getline(cin, user);
-    while (! verificarUsuarioNuevo(user)){
+    while (!verificarUsuarioNuevo(user)) {
         cout << "Ingrese el nombre de usuario: ";
         getline(cin, user);
     }
+
     cout << "Ingrese la contraseña: ";
     getline(cin, pass);
-    while (! verficarPassUsuarioNuevo(pass)){
+    while (!verficarPassUsuarioNuevo(pass)) {
         cout << "Ingrese la contraseña: ";
         getline(cin, pass);
     }
+
     cout << "Ingrese nuevamente la contraseña: ";
     getline(cin, pass2);
-    while ( (verficarPassUsuarioNuevo(pass2) && (pass != pass2)) ){
+    while ((verficarPassUsuarioNuevo(pass2) && (pass != pass2))) {
         cout << "Las contraseñas no coinciden" << endl;
         cout << "Ingrese la contraseña: ";
         getline(cin, pass);
-        while (! verficarPassUsuarioNuevo(pass)){
+        while (!verficarPassUsuarioNuevo(pass)) {
             cout << "Ingrese la contraseña: ";
             getline(cin, pass);
         }
@@ -134,28 +136,29 @@ void addUser(map <string,Usuario> &users){
         getline(cin, pass2);
     }
 
-    cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G) ): ";
+    cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G)): ";
     cin >> eleccion;
-    while ( tolower(eleccion) != 'a' && tolower(eleccion)  != 'g') {
-        cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G) ): ";
+    while (tolower(eleccion) != 'a' && tolower(eleccion) != 'g') {
+        cout << "Ingrese el tipo de usuario(Admin(A) / Generico(G)): ";
         cin >> eleccion;
     }
-    cin.ignore();  // Ignorar el salto de línea para el proximo cin
-    if( tolower(eleccion) == 'a'){
+
+    cin.ignore();  // Ignorar el salto de línea para el próximo cin
+
+    if (tolower(eleccion) == 'a') {
         tipo = "Admin";
-    }else{
+    } else {
         tipo = "Usuario Generico";
     }
+
     users[user] = Usuario(user, pass, tipo);
-    //agregar a archivo 
     addUserData(user, pass, tipo);
     cout << "Usuario agregado exitosamente" << endl;
 }
 
-bool deleteUserData(string user){
-    // Obtener la ruta del archivo de texto desde la variable de entorno
-    const char* filePath = getenv("TXT_FILE_PATH");
-    // Abrir el archivo original y un archivo temporal
+bool deleteUserData(string user) {
+    const char* filePath = "../Data/Users.txt";  // Ruta directa al archivo
+
     ifstream file(filePath);
     ofstream temp("temp.txt");
     if (!temp.is_open()) {
@@ -163,12 +166,12 @@ bool deleteUserData(string user){
         file.close();
         return false;
     }
+
     string line;
     while (getline(file, line)) {
-        stringstream lineStream(line); 
+        stringstream lineStream(line);
         string userFile;
-        getline(lineStream, userFile, ';');  // Leer hasta el primer ';'
-        // Si el nombre de usuario no coincide, escribir la línea en el archivo temporal
+        getline(lineStream, userFile, ';');
         if (userFile != user) {
             temp << line << endl;
         }
@@ -176,45 +179,43 @@ bool deleteUserData(string user){
 
     file.close();
     temp.close();
-    // Reemplazar el archivo original con el archivo temporal
-    if (rename("temp.txt",filePath) != 0) {
+
+    if (rename("temp.txt", filePath) != 0) {
         cerr << "Error: No se pudo eliminar el archivo original." << endl;
         return false;
     }
+
     return true;
 }
 
-
-void deleteUser(map <string,Usuario> &users){
+void deleteUser(map<string, Usuario> &users) {
     string user;
-    while (true){
+    while (true) {
         cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
         getline(cin, user);
-        if ( user.length() == 1 && tolower(user[0]) == 'l'){
+        if (user.length() == 1 && tolower(user[0]) == 'l') {
             listUsers(users);
             cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
             getline(cin, user);
         }
-        if (users.find(user) != users.end()){
-            if(users[user].getTipo() == "Admin"){
+
+        if (users.find(user) != users.end()) {
+            if (users[user].getTipo() == "Admin") {
                 cout << "\nError: No se puede eliminar un usuario administrador" << endl;
                 return;
-            }else{
-            users.erase(user);
-            //actualizar archivo
-            if (!deleteUserData(user)) {
-                cout << "Error: No se pudo eliminar el usuario" << endl;
-                return;
-            }else{
-                cout << "Usuario eliminado exitosamente" << endl;
-                return;
+            } else {
+                users.erase(user);
+                if (!deleteUserData(user)) {
+                    cout << "Error: No se pudo eliminar el usuario" << endl;
+                    return;
+                } else {
+                    cout << "Usuario eliminado exitosamente" << endl;
+                    return;
+                }
             }
-            }
-            
-        }else{
+        } else {
             borrarConsola();
-            cout << "Error: El usuario '"<< user << "' no existe" << endl;
+            cout << "Error: El usuario '" << user << "' no existe" << endl;
         }
     }
 }
-
