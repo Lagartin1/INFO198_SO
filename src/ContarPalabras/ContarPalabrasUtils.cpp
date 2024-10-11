@@ -1,4 +1,8 @@
 #include "../../include/ContarPalabrasUtils.h"
+bool isLetterWithAccent(char c) {
+    string accentedLetters = "áéíóúüÁÉÍÓÚÜñÑ";
+    return accentedLetters.find(c) != string::npos;
+}
 
 
 bool carpetaExiste(const string& path) {
@@ -34,10 +38,16 @@ void procesarArchivo(string pathIN,string name, string pathOut){
             istringstream ss(line);
             string palabra;
             while (ss >> palabra) {
-                if (palabras.find(palabra) != palabras.end()){
-                    palabras[palabra] += 1;
+                string cleanWord = "";
+                for (char c : palabra){
+                    if (isalpha(c)|| isLetterWithAccent(c)){
+                        cleanWord += tolower(c);
+                    }
+                }
+                if (palabras.find(cleanWord) != palabras.end()){
+                    palabras[cleanWord] += 1;
                 }else{
-                    palabras[palabra] = 1;
+                    palabras[cleanWord] = 1;
                 }
             }
         }

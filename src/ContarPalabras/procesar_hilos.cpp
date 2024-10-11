@@ -1,51 +1,60 @@
 #include "../../include/procesar_hilos.h"
-
+using namespace std;
 
 // Mutex declaration outside of functions for shared access control
-std::mutex mtx;
+mutex mtx;
+
 
 // Función que cada hilo ejecutará, con mutex para control de acceso
-void procesarArchivoConMutex(const std::string& pathIN, const std::string& name, const std::string& pathOut) {
+void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut,int id, string extension) {
     // Bloquear el acceso a los archivos mientras se abre y procesa el archivo de entrada
     {
-        std::lock_guard<std::mutex> lock(mtx);  // Protege solo esta sección
-        std::ifstream file(pathIN + "/" + name);
+        lock_guard<std::mutex> lock(mtx);  // Protege solo esta sección
+        ifstream file(pathIN + "/" + name);
         if (!file.is_open()) {
-            std::cout << "Error: No se pudo abrir el archivo " << pathIN + "/" + name << std::endl;
+            cout << "Error: No se pudo abrir el archivo " << pathIN + "/" + name << endl;
             return;
         }
         
         // Procesamiento del archivo
-        std::map<std::string, int> palabras;
-        std::string line;
-        while (std::getline(file, line)) {
-            std::istringstream ss(line);
-            std::string palabra;
+        map<string, int> palabras;
+        string line;
+        while (getline(file, line)) {
+            istringstream ss(line);
+            string palabra;
             while (ss >> palabra) {
-                palabras[palabra]++;
+                string cleanWord = "";
+                for (char c : palabra) {
+                    if (isalpha(c) || isLetterWithAccent(c)) {
+                        cleanWord += tolower(c);
+                    }
+                }
+                if (!cleanWord.empty()){
+                    palabras[cleanWord]++;
+                }
             }
         }
         file.close();
         
         // Escribir los resultados en el archivo de salida
-        std::ofstream outFile(pathOut + "/" + name);
+        ofstream outFile(pathOut + "/" + to_string(id) + extension);
         if (!outFile.is_open()) {
-            std::cout << "Error: No se pudo abrir el archivo de salida " << pathOut + "/" + name << std::endl;
+            cout << "Error: No se pudo abrir el archivo de salida " << pathOut + "/" + name << endl;
             return;
         }
 
         for (const auto& item : palabras) {
-            outFile << item.first << ";" << item.second << std::endl;
+            outFile << item.first << ";" << item.second << endl;
         }
         outFile.close();
 
-        std::cout << "Archivo " << pathIN + "/" + name << ", " << palabras.size() << " palabras distintas" << std::endl;
+        cout << "Archivo " << pathIN + "/" + name << ", " << palabras.size() << " palabras distintas" << endl;
     }
 }
 
-void procesarArchivosConHilos(const std::string& extension, const std::string& carpetaEntrada, const std::string& carpetaSalida, size_t numHilos) {
-    std::vector<std::thread> hilos;
-    std::vector<std::string> archivos;
+void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos) {
+    vector<thread> hilos;
+    vector<string> archivos;
 
     // Recolectar archivos con la extensión dada
     for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
@@ -65,7 +74,7 @@ void procesarArchivosConHilos(const std::string& extension, const std::string& c
 
         // Llamar a la función procesarArchivoConMutex en un hilo
         hilos.emplace_back([&, i]() { 
-            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida); 
+            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida,i,extension); 
         });
     }
 
@@ -81,15 +90,13 @@ int main(int argc, char* argv[]) {
 
     // Estos datos hay que traerlos de variables de entorno
     string extension = ".txt";  
-    string carpetaEntrada = "/home/vicntea/INFO198_SO/in/libros";
-    string carpetaSalida = "/home/vicntea/INFO198_SO/out"; 
-    int numHilos = 1; 
-    string carpetaMap = "/home/vicntea/INFO198_SO/Data";
+    string carpetaEntrada = "/home/francisco/GitProyects/INFO198_SO/in/libros";
+    string carpetaSalida = "/home/francisco/GitProyects/INFO198_SO/out"; 
+    int numHilos = stoi(getenv("CANTIDAD_THREAD")); 
+    string carpetaMap = getenv("MAPA_ARCHIVOS");
     int opcion;
 
-    
-
-    if (numHilos > hilosDisponibles){
+    if (numHilos > static_cast<int>(hilosDisponibles)){
         cout << "Error: Superaste la cantidad de hilos disponibles" << endl << endl;
         cout << "Programa finalizado" << endl;
         return 0;
@@ -174,10 +181,10 @@ int main(int argc, char* argv[]) {
                 cout << "Ingrese la cantidad de hilos a utilizar: ";
                 cin >> numHilos;
 
-                if (cin.fail() || numHilos <= 0 || numHilos > hilosDisponibles) {
+                if (cin.fail() || numHilos <= 0 || numHilos > static_cast<int>(hilosDisponibles)) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    if (numHilos > hilosDisponibles) {
+                    if (numHilos > static_cast<int>(hilosDisponibles)) {
                         cout << "Error: Ha ingresado un número mayor al máximo de hilos disponibles (" << hilosDisponibles << ")." << endl;
                     } else {
                         cout << "Error: Debe ingresar un número entero positivo." << endl;

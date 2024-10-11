@@ -5,6 +5,7 @@ int main(int argc, char *argv[]){
     int opt;
     string user, pass, text, vect, num;
     map<string, Usuario> users;
+    string USERSPATH = getenv("TXT_FILE_PATH");
 
     while ((opt = getopt(argc, argv, "u:p:t:v:n:")) != -1){
         switch (opt)
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]){
         exit(EXIT_FAILURE);
     }
    
-    extractUsers(users);
+    extractUsers(users, USERSPATH);
     verificarEntradadas(text, vect, num);
     cout << "\n";
     cout << "=========================================="<<endl;

@@ -1,16 +1,16 @@
-C. S. Lewis - Las Crónicas de Narnia 4 - La Silla de Plata.txt,0
+J.K. Rowling - Harry Potter 4 - El Cáliz de Fuego.txt,0
 C. S. Lewis - Las Crónicas de Narnia 7 - La Última Batalla.txt,1
-J.K. Rowling - Harry Potter 4 - El Cáliz de Fuego.txt,2
-C. S. Lewis - Las Crónicas de Narnia 2 - El Principe Caspian.txt,3
-C. S. Lewis - Las Crónicas de Narnia 1 - El León, la Bruja y el Ropero.txt,4
-C. S. Lewis - Las Crónicas de Narnia 5 - El Caballo y su Niño.txt,5
-J.K. Rowling - Harry Potter 6 - El Misterio del Príncipe.txt,6
-J.K. Rowling - Harry Potter 2 - La Cámara Secreta.txt,7
-C. S. Lewis - Las Crónicas de Narnia 6 - El Sobrino del Mago.txt,8
-J.M. Barrie - Peter Pan.txt,9
-C. S. Lewis - Las Crónicas de Narnia 3 - La Travesia del Explorador del Amanecer.txt,10
-J.K. Rowling - Harry Potter 3 - El Prisionero de Azkaban.txt,11
-J.K. Rowling - Harry Potter 5 - La Orden del Fenix.txt,12
-J.K. Rowling - Harry Potter 1 - La Piedra Filosofal.txt,13
-J.K. Rowling - Harry Potter 7 - Las Reliquias de la Muerte.txt,14
-Scott Fitzgerald - El extraño caso de Benjamin Button.txt,15
+C. S. Lewis - Las Crónicas de Narnia 3 - La Travesia del Explorador del Amanecer.txt,2
+C. S. Lewis - Las Crónicas de Narnia 4 - La Silla de Plata.txt,3
+J.K. Rowling - Harry Potter 6 - El Misterio del Príncipe.txt,4
+C. S. Lewis - Las Crónicas de Narnia 6 - El Sobrino del Mago.txt,5
+C. S. Lewis - Las Crónicas de Narnia 2 - El Principe Caspian.txt,6
+J.K. Rowling - Harry Potter 1 - La Piedra Filosofal.txt,7
+J.K. Rowling - Harry Potter 7 - Las Reliquias de la Muerte.txt,8
+J.K. Rowling - Harry Potter 3 - El Prisionero de Azkaban.txt,9
+J.K. Rowling - Harry Potter 5 - La Orden del Fenix.txt,10
+C. S. Lewis - Las Crónicas de Narnia 1 - El León, la Bruja y el Ropero.txt,11
+J.M. Barrie - Peter Pan.txt,12
+C. S. Lewis - Las Crónicas de Narnia 5 - El Caballo y su Niño.txt,13
+Scott Fitzgerald - El extraño caso de Benjamin Button.txt,14
+J.K. Rowling - Harry Potter 2 - La Cámara Secreta.txt,15

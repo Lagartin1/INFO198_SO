@@ -15,4 +15,5 @@ void procesar(const string& extension, const string& carpetaEntrada, const strin
 bool archivosConExtensionExisten(const string& extension, const string& carpeta);
 bool carpetaExiste(const string& path);
 void generarArchivoConIDs(const std::string& carpetaEntrada, const std::string& carpetaSalida, const std::string& extension);
+bool isLetterWithAccent(char c);
 #endif // CONTARPALABRASUTILS_H

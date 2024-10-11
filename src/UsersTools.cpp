@@ -1,8 +1,7 @@
 #include "../include/UsersTools.h"
 #include "../include/TextTools.h"
 
-void extractUsers(map<string, Usuario> &users) {
-    const char* txtFilePath = "../Data/Users.txt";  // Ruta directa al archivo
+void extractUsers(map<string, Usuario> &users,string txtFilePath){
 
     ifstream file(txtFilePath);
     if (!file.is_open()) {
