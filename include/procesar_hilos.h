@@ -3,5 +3,7 @@
 #include <vector>
 #include <limits>
 #include <stdexcept>
-
-void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, int numHilos);
+#include <mutex>
+#include <sstream>
+void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos);
+void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut);

@@ -2,7 +2,9 @@
 Comp = g++
 
 # Opciones del compilador
-CFLAGS = -Wall -Wextra -std=c++17 -Iinclude
+# Opciones del compilador
+CFLAGS = -Wall -Wextra -std=c++17 -pthread -Iinclude
+
 
 # Directorios
 BIN_DIR = bin/

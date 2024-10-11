@@ -1,8 +1,51 @@
 #include "../../include/procesar_hilos.h"
 
-void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, int numHilos) {
-    vector<thread> hilos;
-    vector<string> archivos;
+
+// Mutex declaration outside of functions for shared access control
+std::mutex mtx;
+
+// Función que cada hilo ejecutará, con mutex para control de acceso
+void procesarArchivoConMutex(const std::string& pathIN, const std::string& name, const std::string& pathOut) {
+    // Bloquear el acceso a los archivos mientras se abre y procesa el archivo de entrada
+    {
+        std::lock_guard<std::mutex> lock(mtx);  // Protege solo esta sección
+        std::ifstream file(pathIN + "/" + name);
+        if (!file.is_open()) {
+            std::cout << "Error: No se pudo abrir el archivo " << pathIN + "/" + name << std::endl;
+            return;
+        }
+        
+        // Procesamiento del archivo
+        std::map<std::string, int> palabras;
+        std::string line;
+        while (std::getline(file, line)) {
+            std::istringstream ss(line);
+            std::string palabra;
+            while (ss >> palabra) {
+                palabras[palabra]++;
+            }
+        }
+        file.close();
+        
+        // Escribir los resultados en el archivo de salida
+        std::ofstream outFile(pathOut + "/" + name);
+        if (!outFile.is_open()) {
+            std::cout << "Error: No se pudo abrir el archivo de salida " << pathOut + "/" + name << std::endl;
+            return;
+        }
+
+        for (const auto& item : palabras) {
+            outFile << item.first << ";" << item.second << std::endl;
+        }
+        outFile.close();
+
+        std::cout << "Archivo " << pathIN + "/" + name << ", " << palabras.size() << " palabras distintas" << std::endl;
+    }
+}
+
+void procesarArchivosConHilos(const std::string& extension, const std::string& carpetaEntrada, const std::string& carpetaSalida, size_t numHilos) {
+    std::vector<std::thread> hilos;
+    std::vector<std::string> archivos;
 
     // Recolectar archivos con la extensión dada
     for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
@@ -15,13 +58,15 @@ void procesarArchivosConHilos(const string& extension, const string& carpetaEntr
     for (size_t i = 0; i < archivos.size(); ++i) {
         if (hilos.size() >= numHilos) {
             for (auto& hilo : hilos) {
-                hilo.join(); // Espera a que los hilos terminen
+                hilo.join();  // Espera a que los hilos terminen
             }
-            hilos.clear(); // Reiniciar el vector de hilos
+            hilos.clear();  // Reiniciar el vector de hilos
         }
 
-        // Llamar a la función procesar en un hilo
-        hilos.emplace_back(procesar, extension, carpetaEntrada, carpetaSalida);
+        // Llamar a la función procesarArchivoConMutex en un hilo
+        hilos.emplace_back([&, i]() { 
+            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida); 
+        });
     }
 
     // Unir los hilos restantes
@@ -38,7 +83,7 @@ int main(int argc, char* argv[]) {
     string extension = ".txt";  
     string carpetaEntrada = "/home/vicntea/INFO198_SO/in/libros";
     string carpetaSalida = "/home/vicntea/INFO198_SO/out"; 
-    int numHilos = 4; 
+    int numHilos = 1; 
     string carpetaMap = "/home/vicntea/INFO198_SO/Data";
     int opcion;
 
