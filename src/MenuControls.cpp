@@ -73,7 +73,9 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             ifstream file(MapaFilePath);
             if (file) {
                 file.close();
-                int res = system("./app4");
+                string pathIndex = getenv("INVERTED_INDEX");
+                string orden = "./app4 "+pathIndex;
+                int res = system(orden.c_str());
                 if (res != 0){
                     cout << "Error al ejecutar el programa" << endl;
                 }
