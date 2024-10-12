@@ -34,14 +34,11 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
     | INVERTED_INDEX | es la ruta completa al archvio ` indice.INDEX` precente en el directorio `/Data` de este programa|
     |CANTIDAD_THREAD | es la cantidad de Threads que se ocuparan para el Programa de Procesar con hilos |
     
-    al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe hacer de la siguiente forma:
+    al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe estar el la raiz del repositorio y ejecutar:
 
         ```bash
-         export TXT_FILE_PATH=<filePath>
-         export MAPA_ARCHIVOS=<filePath>
-         export STOP_WORDS=<filePath>
-         export INVERTED_INDEX=<filePath>
-         export CANTIDAD_THREAD=<cantidad>
+         chmod +x config.sh
+         source ./config.sh
         ```
 2. Navega al directorio `bin/` donde se encuentra el archivo ejecutable `app`.
 

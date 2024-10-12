@@ -4,9 +4,22 @@ using namespace std;
 // Mutex declaration outside of functions for shared access control
 mutex mtx;
 
+void extraerStopwords(vector<string>& stopwords,string filepath) {
+    ifstream file(filepath);
+    if (!file.is_open()) {
+        cout << "Error: No se pudo abrir el archivo de stopwords." << endl;
+        return;
+    }
+    string word;
+    while (file >> word) {  // Leer cada palabra del archivo suponiendo que hay una palabra por linea
+        stopwords.push_back(word);
+    }
+    file.close();
+}
+
 
 // Función que cada hilo ejecutará, con mutex para control de acceso
-void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut,int id, string extension) {
+void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut,int id, string extension,vector<string> &stopwords) {
     // Bloquear el acceso a los archivos mientras se abre y procesa el archivo de entrada
     {
         lock_guard<std::mutex> lock(mtx);  // Protege solo esta sección
@@ -30,7 +43,10 @@ void procesarArchivoConMutex(const string& pathIN, const string& name, const str
                     }
                 }
                 if (!cleanWord.empty()){
-                    palabras[cleanWord]++;
+                    if ( find(stopwords.begin(), stopwords.end(), cleanWord) != stopwords.end()){
+                        palabras[cleanWord]++;
+                    }
+
                 }
             }
         }
@@ -52,7 +68,7 @@ void procesarArchivoConMutex(const string& pathIN, const string& name, const str
     }
 }
 
-void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos) {
+void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos,vector<string> &stopwords) {
     vector<thread> hilos;
     vector<string> archivos;
 
@@ -74,7 +90,7 @@ void procesarArchivosConHilos(const string& extension, const string& carpetaEntr
 
         // Llamar a la función procesarArchivoConMutex en un hilo
         hilos.emplace_back([&, i]() { 
-            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida,i,extension); 
+            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida,i,extension,stopwords); 
         });
     }
 
@@ -83,6 +99,9 @@ void procesarArchivosConHilos(const string& extension, const string& carpetaEntr
         hilo.join();
     }
 }
+
+
+
 
 int main(int argc, char* argv[]) {
     unsigned int hilosDisponibles = std::thread::hardware_concurrency();
@@ -94,7 +113,10 @@ int main(int argc, char* argv[]) {
     string carpetaSalida = "/home/francisco/GitProyects/INFO198_SO/out"; 
     int numHilos = stoi(getenv("CANTIDAD_THREAD")); 
     string carpetaMap = getenv("MAPA_ARCHIVOS");
+    string stopWordPath = getenv("STOP_WORDS");
     int opcion;
+    vector<string> stopwords;
+    extraerStopwords(stopwords,stopWordPath);
 
     if (numHilos > static_cast<int>(hilosDisponibles)){
         cout << "Error: Superaste la cantidad de hilos disponibles" << endl << endl;
@@ -105,7 +127,7 @@ int main(int argc, char* argv[]) {
     if (argc > 1 && string(argv[1]) == "default") {
         cout << "Ejecutando con valores por defecto." << endl;
         cout << "Procesando archivos con " << numHilos << " hilos...\n" << endl;
-        procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos);
+        procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos,stopwords);
         cout << "El proceso de conteo de palabras ha finalizado.\n" << endl;
         generarArchivoConIDs(carpetaEntrada,carpetaMap,extension);
         return 0; 
@@ -198,7 +220,7 @@ int main(int argc, char* argv[]) {
                     cout << "Error: No hay archivos con la extensión indicada en la carpeta de entrada." << endl;
                 } else {
                     cout << "Procesando archivos con " << numHilos << " hilos...\n" << endl;
-                    procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos);
+                    procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos,stopwords);
                     cout << "El proceso de conteo de palabras ha finalizado.\n" << endl;
                 }
                 break;

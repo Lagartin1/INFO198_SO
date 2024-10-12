@@ -24,6 +24,7 @@ void mappingWords(string pathFile,map<string , vector< tuple<string,string> > > 
             index[word].push_back(make_tuple(fileName,amount));
         }
     }
+    file.close();
 }
 void saveIndex(string pathFile, map<string , vector< tuple<string,string> > > & index){
     ofstream outFile(pathFile);
@@ -52,10 +53,10 @@ int main(int argc, char* argv[]) {
     cout << "PID del proceso: " << getpid() << endl;
     cout << "=================================\n" << endl;
 
-    string invertedIndexPATH = argv[1]; 
+    string invertedIndexPATH = argv[1];
+    //string outFilesPAth = argv[2];
     string extension = ".txt";
     //variables de entorno 
-    string mapaFilePath = getenv("mapa_archivos")+string("/mapa.txt");
     string outFilesPAth = "/home/francisco/GitProyects/INFO198_SO/out";    
 
     //crear indice invertido
@@ -70,6 +71,7 @@ int main(int argc, char* argv[]) {
     }
     //escribir el indice invertido en un archivo
     saveIndex(invertedIndexPATH, invertedIndex);
+    invertedIndex.clear();
     cout << "Indice invertido creado exitosamente, ruta: " << invertedIndexPATH << endl;
     exit(EXIT_SUCCESS);    
 
