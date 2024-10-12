@@ -1,4 +1,3 @@
-#!/bin/bash
 export TXT_FILE_PATH="/home/francisco/GitProyects/INFO198_SO/Data/Users.txt"
 export MAPA_ARCHIVOS="/home/francisco/GitProyects/INFO198_SO/Data"
 export STOP_WORDS="/home/francisco/GitProyects/INFO198_SO/Data/stop_words.txt"

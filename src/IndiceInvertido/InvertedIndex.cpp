@@ -10,7 +10,7 @@ namespace fs = std::filesystem;
 
 
 
-void mappingWords(string pathFile,map<string , vector< tuple<string,int> > > & index,string fileName){
+void mappingWords(string pathFile,map<string , vector< tuple<string,string> > > &index,string fileName){
     ifstream file(pathFile);
     if (!file.is_open()) {
         cout << "Error: No se pudo abrir el archivo" << endl;
@@ -21,12 +21,11 @@ void mappingWords(string pathFile,map<string , vector< tuple<string,int> > > & i
             string word;string amount ;
             getline(line, word, ';');
             getline(line, amount, ';');
-            int amountInt = stoi(amount);
-            index[word].push_back(make_tuple(fileName,amountInt));    
+            index[word].push_back(make_tuple(fileName,amount));
         }
     }
 }
-void saveIndex(string pathFile, map<string , vector< tuple<string,int> > > & index){
+void saveIndex(string pathFile, map<string , vector< tuple<string,string> > > & index){
     ofstream outFile(pathFile);
     if (!outFile.is_open()) {
         cout << "Error: No se pudo abrir el archivo de salida " << pathFile << endl;
@@ -60,7 +59,7 @@ int main(int argc, char* argv[]) {
     string outFilesPAth = "/home/francisco/GitProyects/INFO198_SO/out";    
 
     //crear indice invertido
-    map<string, vector< tuple<string, int> > > invertedIndex;
+    map<string, vector< tuple<string, string> > > invertedIndex;
     
     //leer todos los archivos del directorio
     cout << "Creando indice invertido..." << endl;

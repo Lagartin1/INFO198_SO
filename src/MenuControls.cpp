@@ -4,7 +4,7 @@
 #include <map>
 
 void menu(string& text, string v, string& num, Usuario user,map<string, Usuario> &users) {
-    string MapaFilePath = getenv("mapa_archivos");
+    string MapaFilePath = getenv("MAPA_ARCHIVOS");
     bool isAdmin ; 
     if (user.getTipo() == "Admin"){
         isAdmin = true;
@@ -23,7 +23,7 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
         cout << "4. Calcular promedio y sumatoria de un vector" << endl;
         cout << "5. Calcular una f(x)=5x*x + 1/x" << endl;
         cout << "6. Contar palabras" << endl;
-        cout << "7. Contar palabras con hilos"  << endl;
+        cout << "7. Conteo paralelo con threads"  << endl;
         cout << "8. Crear indice invertido" << endl;
         if (isAdmin){
             cout << "9. Listar usuarios" << endl;

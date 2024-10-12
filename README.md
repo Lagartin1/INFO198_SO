@@ -1,8 +1,8 @@
 # INFO198_SO
 ## Descripcion
-Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por cinco opciones:
+Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por ocho opciones para usuarios genericos:
 detección de palíndromos, conteo de vocales, conteo de letras en un texto, cálculo del promedio y sumatoria de un vector, y 
-evaluación de la función f(x) = 5x^2 + 1/x . El usuario proporciona los datos necesarios mediante argumentos de 
+evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido. Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
 línea de comandos para ejecutar las opciones correspondientes, como nombre de usuario, contraseña, frase de texto,
 vector de números, y un valor numérico.
 
@@ -25,16 +25,29 @@ Para compilar el programa, sigue los siguientes pasos:
 
 Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde la terminal de la siguiente manera:
 
-1. Navega al directorio `bin/` donde se encuentra el archivo ejecutable `app`.
+1. Varibles de entorno:
+   | Variable | Descripcion |
+    | -------- | ----------- |
+    | TXT_FILE_PATH | es la ruta completa al archivo ` Users.txt` precente en el directorio  `/Data` de este programa |
+    | MAPA_ARCHIVOS | es la ruta completa al archivo ` Map.txt` que puede o no existir |
+    | STOP_WORDS | es la ruta completa al archivo ` stop_words.txt` que precente en el directorio `/Data` de este programa |
+    | INVERTED_INDEX | es la ruta completa al archvio ` indice.INDEX` precente en el directorio `/Data` de este programa|
+    |CANTIDAD_THREAD | es la cantidad de Threads que se ocuparan para el Programa de Procesar con hilos |
+    
+    al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe hacer de la siguiente forma:
+
+        ```bash
+         export TXT_FILE_PATH=<filePath>
+         export MAPA_ARCHIVOS=<filePath>
+         export STOP_WORDS=<filePath>
+         export INVERTED_INDEX=<filePath>
+         export CANTIDAD_THREAD=<cantidad>
+        ```
+2. Navega al directorio `bin/` donde se encuentra el archivo ejecutable `app`.
 
    ```bash
    cd bin/
-2. Asegure tener cargada la variable de entorno CSV_FILE_PATH que contiene los datos de ingreso.
-   Debes obtener la ruta al archivo ` Users.txt` precente en el directorio  `/Data` de este programa,y cargarlo a las varibales de entorno.
-    * Para Linux/MacOS (bash) debe ser de la forma:
-        ```bash
-        export TXT_FILE_PATH="/ruta/al/archivo/Users.txt"
-        ```
+   ```
 
 3. Ejecuta el programa proporcionando los argumentos necesarios. El formato general es:
     ```bash
@@ -55,4 +68,6 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
 ```bash
 ./app -u usuario -p micontraseña -t "Hola Mundo" -v "6;7;2;9;5" -n 30
 ```
+
+
 
