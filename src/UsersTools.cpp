@@ -1,6 +1,8 @@
 #include "../include/UsersTools.h"
 #include "../include/TextTools.h"
 
+#include <string>
+
 void extractUsers(map<string, Usuario> &users,string txtFilePath){
 
     ifstream file(txtFilePath);
@@ -99,7 +101,7 @@ void addUserData(string user, string pass, string tipo) {
         cout << "Error: No se pudo abrir el archivo para agregar datos" << std::endl;
         return;
     }
-    file << user << ";" << pass << ";" << tipo << endl;
+    file << user << ";" << pass << ";" << tipo << ";" << endl;
     file.close();
 }
 
