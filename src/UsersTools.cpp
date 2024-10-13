@@ -192,11 +192,11 @@ bool deleteUserData(string user) {
 void deleteUser(map<string, Usuario> &users) {
     string user;
     while (true) {
-        cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
+        cout << "Ingrese el nombre de usuario a eliminar (l: para listar usuarios): ";
         getline(cin, user);
         if (user.length() == 1 && tolower(user[0]) == 'l') {
             listUsers(users);
-            cout << "Ingrese el nombre de usuario a eliminar (L: para listar usuarios): ";
+            cout << "Ingrese el nombre de usuario a eliminar (l: para listar usuarios): ";
             getline(cin, user);
         }
 

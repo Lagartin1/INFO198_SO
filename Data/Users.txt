@@ -9,3 +9,4 @@ holaaaa;holaaaaa4;Admin;
 pepito;pepito123;Usuario Generico;
 whoiam;1pass23;Admin;
 pepit;pass123;Usuario Generico;
+claudito;claudito1;Admin;

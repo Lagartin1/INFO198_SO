@@ -26,6 +26,8 @@ Para compilar el programa, sigue los siguientes pasos:
 Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde la terminal de la siguiente manera:
 
 1. Varibles de entorno:
+   
+   Para modificar las variables deben abrir el archivo `config.sh` precente en la raiz del repositorio, las variables son las detalladas aqui:
    | Variable | Descripcion |
     | -------- | ----------- |
     | TXT_FILE_PATH | es la ruta completa al archivo ` Users.txt` precente en el directorio  `/Data` de este programa |
@@ -36,10 +38,11 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
     
     al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe estar el la raiz del repositorio y ejecutar:
 
-        ```bash
-         chmod +x config.sh
-         source ./config.sh
-        ```
+      ```bash
+      chmod +x config.sh
+      source ./config.sh
+      ```
+      
 2. Navega al directorio `bin/` donde se encuentra el archivo ejecutable `app`.
 
    ```bash

@@ -43,7 +43,7 @@ void procesarArchivoConMutex(const string& pathIN, const string& name, const str
                     }
                 }
                 if (!cleanWord.empty()){
-                    if ( find(stopwords.begin(), stopwords.end(), cleanWord) != stopwords.end()){
+                    if ( find(stopwords.begin(), stopwords.end(), cleanWord) == stopwords.end()){
                         palabras[cleanWord]++;
                     }
 
@@ -109,8 +109,8 @@ int main(int argc, char* argv[]) {
 
     // Estos datos hay que traerlos de variables de entorno
     string extension = ".txt";  
-    string carpetaEntrada = "/home/francisco/GitProyects/INFO198_SO/in/libros";
-    string carpetaSalida = "/home/francisco/GitProyects/INFO198_SO/out"; 
+    string carpetaEntrada = "../in/libros";
+    string carpetaSalida = "../out"; 
     int numHilos = stoi(getenv("CANTIDAD_THREAD")); 
     string carpetaMap = getenv("MAPA_ARCHIVOS");
     string stopWordPath = getenv("STOP_WORDS");
