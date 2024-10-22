@@ -12,6 +12,8 @@ SRC_DIR = src/
 APP2_DIR = src/ContarPalabras/
 APP3_DIR = src/ContarPalabras/
 APP4_DIR = src/IndiceInvertido/
+PLANIFICADOR_DIR = src/Planificator/
+SOCK_DIR = sockets/
 
 # Archivos fuente
 MAIN_SRC = $(SRC_DIR)MainApp.cpp
@@ -19,7 +21,7 @@ APP2_SRC = $(APP2_DIR)ContarPalabras.cpp $(APP2_DIR)ContarPalabrasUtils.cpp #Agr
 APP3_SRC = $(APP3_DIR)procesar_hilos.cpp $(APP3_DIR)ContarPalabrasUtils.cpp
 APP4_SRC = $(APP4_DIR)InvertedIndex.cpp
 # Objetivos
-all: clean mkdir app app2 app3 app4
+all: clean mkdir app app2 app3 app4 planificador distribuidor core
 
 # Compilación de la aplicación principal
 app:
@@ -36,9 +38,18 @@ app3:
 app4:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app4 $(APP4_SRC)
 # Crear el directorio bin si no existe
+
+planificador:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)planificador $(PLANIFICADOR_DIR)Planificator.cpp
+
+distribuidor:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)distribuidor $(PLANIFICADOR_DIR)Distributor.cpp
+core:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)core $(PLANIFICADOR_DIR)Core.cpp
+
 mkdir:
 	mkdir -p $(BIN_DIR)
-
+	mkdrir -p $(SOCK_DIR)
 # Limpieza de archivos generados
 clean:
 	rm -rf $(BIN_DIR)*

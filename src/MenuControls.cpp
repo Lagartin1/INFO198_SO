@@ -25,10 +25,12 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
         cout << "6. Contar palabras" << endl;
         cout << "7. Conteo paralelo con threads"  << endl;
         cout << "8. Crear indice invertido" << endl;
+        cout << "9. Analisis de performance"<<endl;
+        cout << "10. Planificador"<<endl;
         if (isAdmin){
-            cout << "9. Listar usuarios" << endl;
-            cout << "10. Agregar usuario" << endl;
-            cout << "11. Eliminar usuario" << endl;
+            cout << "11. Listar usuarios" << endl;
+            cout << "12. Agregar usuario" << endl;
+            cout << "13. Eliminar usuario" << endl;
         }
         cout << "Ingrese una opcion: ";
         getline(cin, option);
@@ -58,13 +60,15 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             }
         }else if (option == "6") {
             cout<< "\n" <<endl;
-            int res = system("./app2");
+            string wordcount = getenv("COUNTWORD_OUT");
+            int res = system(wordcount.c_str());
             if (res != 0){
                 cout << "Error al ejecutar el programa" << endl;
             }
         }else if (option == "7") {
             cout<< "\n" <<endl;
-            int res = system("./app3 default");
+            string wordthreads = getenv("COUNTWORD_THREADS_OUT");
+            int res = system(wordthreads.c_str());
             if (res != 0){
                 cout << "Error al ejecutar el programa" << endl;
             }
@@ -74,7 +78,8 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             if (file) {
                 file.close();
                 string pathIndex = getenv("INVERTED_INDEX");
-                string orden = "./app4 "+pathIndex;
+                string invertedIndexApp = getenv("INVERTED_OUT");
+                string orden = invertedIndexApp +" " +pathIndex;
                 int res = system(orden.c_str());
                 if (res != 0){
                     cout << "Error al ejecutar el programa" << endl;
@@ -83,13 +88,18 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
                 cout << "Error: No se ha ejecutado la opcion (7) Contar palabras con hilo" << endl;
             }
             
-        }else if(option == "9" && isAdmin){
+        }else if(option == "10"){
+            cout<< "\n" <<endl;
+            string planificador = getenv("PLANIFICADOR_OUT");
+            system(planificador.c_str());
+
+        }else if(option == "10" && isAdmin){
             cout<< "\n" <<endl;
             listUsers(users);
-        }else if (option == "10" && isAdmin){
+        }else if (option == "11" && isAdmin){
             cout<< "\n" <<endl;
             addUser(users);
-        }else if (option == "11" && isAdmin){
+        }else if (option == "12" && isAdmin){
             cout<< "\n" <<endl;
             deleteUser(users);
         }else{
