@@ -1,8 +1,8 @@
 # INFO198_SO
 ## Descripcion
-Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por ocho opciones para usuarios genericos:
+Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por 10 opciones para usuarios genericos:
 detección de palíndromos, conteo de vocales, conteo de letras en un texto, cálculo del promedio y sumatoria de un vector, y 
-evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido. Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
+evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido,medidor de preformance, planificador . Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
 línea de comandos para ejecutar las opciones correspondientes, como nombre de usuario, contraseña, frase de texto,
 vector de números, y un valor numérico.
 
@@ -35,6 +35,14 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
     | STOP_WORDS | es la ruta completa al archivo ` stop_words.txt` que precente en el directorio `/Data` de este programa |
     | INVERTED_INDEX | es la ruta completa al archvio ` indice.INDEX` precente en el directorio `/Data` de este programa|
     |CANTIDAD_THREAD | es la cantidad de Threads que se ocuparan para el Programa de Procesar con hilos |
+    |RESULTADOS | es la ruta completa al archivo `resultados.txt`|
+    |PROCESOS | es la ruta completa al archivo `procesos.txt`|
+    |SOCKET_DIR |es la ruta completa al directorio donde estaran los sockets |
+    |COUNTWORDS_OUT| es la ruta al archivo ejecutable de Contar palabras en un directorio|
+    |COUNTWORD_THREADS_OUT |es la ruta al archivo ejecutable de contar palabras en un direcotio con threads |
+    |PLANIFICADOR_OUT | es la ruta al archivo ejecutable de planificador|
+    |INVERTED_OUT| es la ruta al archvio ejectuable de Indice invertido|
+    |CANTIDAD_CORES| es la cantidad de cores que se usaran para el planificador|
     
     al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe estar el la raiz del repositorio y ejecutar:
 
@@ -69,5 +77,48 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
 ./app -u usuario -p micontraseña -t "Hola Mundo" -v "6;7;2;9;5" -n 30
 ```
 
+## Formatos de la informacion contenida en los archivos
 
+1. **Users.txt** 
 
+   contiene informacion de los usuarios de la siguiente forma:
+
+   < username > ; < password > ; < Admin / Usuario Generico>; 
+2. **index.INDEX**
+   
+   contiene informacion de las diferentes palabras extraidas y ademas la cantidad existente en los archivos que se procesaron de la siguiente forma:
+
+   < palabra > ; (id , num palabra) ;  (id , num palabra) ; ... ;
+3. **map.txt**
+
+   contiene informacion de los archivos procesados,de la siguiente forma:
+
+   < nombre archivo > ; < id >
+4. **stop_words**
+
+   contiente las plabras que se filtran al procesar los archivos de la sigueite forma:
+
+   < palabra1 >
+
+   < palabra2 >
+   
+   .
+
+   .
+
+   .
+
+   < palabraN >
+5. **procesos.txt** 
+
+   contiene los procesos que se ejecutaran al ejecutar el ejecutable planificador de la siguiente forma:
+
+   < n > ; < operacion >; < numero 1 > ; < numero 2 >;
+
+   las operaciones solo comprenden: suma,resta,multiplicacion y divicion.
+   numero 1 y numero 2 podran ser decimales pero el separador decimal es el punto ( . )
+6. **resultados.txt** 
+
+   contiene la informacion de el resultado de el procesamiento de los procesos,de la siguiente forma:
+
+   ( < id_core > ; < operacion >; < numero 1 >; < numero 2 > ) => < resultado >
