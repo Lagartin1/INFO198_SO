@@ -4,6 +4,8 @@
 #include <limits>
 #include <stdexcept>
 #include <mutex>
+#include <condition_variable>
+#include <set>
 #include <sstream>
 #include <algorithm>
 void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos,vector<string> &stopwords);

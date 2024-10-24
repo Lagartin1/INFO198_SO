@@ -1,106 +1,116 @@
 #include "../../include/procesar_hilos.h"
+#include <unordered_set> // Para unordered_set
+#include <queue>         // Para queue
+#include <condition_variable> // Para condition_variable
+#include <atomic>       // Para atomic
 using namespace std;
 
-// Mutex declaration outside of functions for shared access control
 mutex mtx;
+condition_variable cv;
+queue<pair<string, int>> tareas; // Cola de tareas
+atomic<bool> tareasFinalizadas{false}; // Indica si todas las tareas han sido asignadas
 
-void extraerStopwords(vector<string>& stopwords,string filepath) {
+// Reemplazar vector<string> por unordered_set para stopwords
+void extraerStopwords(unordered_set<string>& stopwords, string filepath) {
     ifstream file(filepath);
     if (!file.is_open()) {
         cout << "Error: No se pudo abrir el archivo de stopwords." << endl;
         return;
     }
     string word;
-    while (file >> word) {  // Leer cada palabra del archivo suponiendo que hay una palabra por linea
-        stopwords.push_back(word);
+    while (file >> word) {
+        stopwords.insert(word); // Usar insert para unordered_set
     }
     file.close();
 }
 
-
-// Función que cada hilo ejecutará, con mutex para control de acceso
-void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut,int id, string extension,vector<string> &stopwords) {
-    // Bloquear el acceso a los archivos mientras se abre y procesa el archivo de entrada
-    {
-        lock_guard<std::mutex> lock(mtx);  // Protege solo esta sección
-        ifstream file(pathIN + "/" + name);
-        if (!file.is_open()) {
-            cout << "Error: No se pudo abrir el archivo " << pathIN + "/" + name << endl;
-            return;
-        }
-        
-        // Procesamiento del archivo
-        map<string, int> palabras;
-        string line;
-        while (getline(file, line)) {
-            istringstream ss(line);
-            string palabra;
-            while (ss >> palabra) {
-                string cleanWord = "";
-                for (char c : palabra) {
-                    if (isalpha(c) || isLetterWithAccent(c)) {
-                        cleanWord += tolower(c);
-                    }
-                }
-                if (!cleanWord.empty()){
-                    if ( find(stopwords.begin(), stopwords.end(), cleanWord) == stopwords.end()){
-                        palabras[cleanWord]++;
-                    }
-
+// Procesar archivos con mutex para control de acceso
+void procesarArchivoConMutex(const string& pathIN, const string& name, const string& pathOut, int id, const string& extension, unordered_set<string>& stopwords) {
+    ifstream file(pathIN + "/" + name);
+    if (!file.is_open()) {
+        cout << "Error: No se pudo abrir el archivo " << pathIN + "/" + name << endl;
+        return;
+    }
+    
+    // Procesamiento del archivo
+    map<string, int> palabras;
+    string line;
+    while (getline(file, line)) {
+        istringstream ss(line);
+        string palabra;
+        while (ss >> palabra) {
+            string cleanWord = "";
+            for (char c : palabra) {
+                if (isalpha(c) || isLetterWithAccent(c)) {
+                    cleanWord += tolower(c);
                 }
             }
+            if (!cleanWord.empty() && stopwords.find(cleanWord) == stopwords.end()) {
+                palabras[cleanWord]++;
+            }
         }
-        file.close();
-        
-        // Escribir los resultados en el archivo de salida
-        ofstream outFile(pathOut + "/" + to_string(id) + extension);
-        if (!outFile.is_open()) {
-            cout << "Error: No se pudo abrir el archivo de salida " << pathOut + "/" + name << endl;
-            return;
+    }
+    file.close();
+    
+    // Escribir los resultados en el archivo de salida
+    ofstream outFile(pathOut + "/" + to_string(id) + extension);
+    if (!outFile.is_open()) {
+        cout << "Error: No se pudo abrir el archivo de salida " << pathOut + "/" + name << endl;
+        return;
+    }
+
+    for (const auto& item : palabras) {
+        outFile << item.first << ";" << item.second << endl;
+    }
+    outFile.close();
+
+    cout << "Archivo " << pathIN + "/" + name << ", " << palabras.size() << " palabras distintas" << endl;
+}
+
+// Función que cada hilo ejecutará
+void hiloProcesador(const string& pathIN, const string& pathOut, const string& extension, unordered_set<string>& stopwords) {
+    while (true) {
+        pair<string, int> tarea;
+
+        {
+            unique_lock<mutex> lock(mtx);
+            cv.wait(lock, [] { return !tareas.empty() || tareasFinalizadas.load(); }); // Espera a que haya tareas o que se hayan finalizado
+            if (tareasFinalizadas.load() && tareas.empty()) break; // Termina si no hay más tareas
+            tarea = tareas.front();
+            tareas.pop();
         }
 
-        for (const auto& item : palabras) {
-            outFile << item.first << ";" << item.second << endl;
-        }
-        outFile.close();
-
-        cout << "Archivo " << pathIN + "/" + name << ", " << palabras.size() << " palabras distintas" << endl;
+        procesarArchivoConMutex(pathIN, tarea.first, pathOut, tarea.second, extension, stopwords);
     }
 }
 
-void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos,vector<string> &stopwords) {
+void procesarArchivosConHilos(const string& extension, const string& carpetaEntrada, const string& carpetaSalida, size_t numHilos, unordered_set<string>& stopwords) {
     vector<thread> hilos;
-    vector<string> archivos;
 
     // Recolectar archivos con la extensión dada
     for (const auto& entry : fs::directory_iterator(carpetaEntrada)) {
         if (entry.path().extension() == extension) {
-            archivos.push_back(entry.path().filename().string());
+            tareas.push({entry.path().filename().string(), static_cast<int>(tareas.size())}); // Agregar tarea a la cola
         }
     }
 
     // Crear hilos para procesar archivos
-    for (size_t i = 0; i < archivos.size(); ++i) {
-        if (hilos.size() >= numHilos) {
-            for (auto& hilo : hilos) {
-                hilo.join();  // Espera a que los hilos terminen
-            }
-            hilos.clear();  // Reiniciar el vector de hilos
-        }
-
-        // Llamar a la función procesarArchivoConMutex en un hilo
-        hilos.emplace_back([&, i]() { 
-            procesarArchivoConMutex(carpetaEntrada, archivos[i], carpetaSalida,i,extension,stopwords); 
-        });
+    for (size_t i = 0; i < numHilos; ++i) {
+        hilos.emplace_back(hiloProcesador, carpetaEntrada, carpetaSalida, extension, ref(stopwords));
     }
 
-    // Unir los hilos restantes
+    // Indicar que se han asignado todas las tareas
+    {
+        lock_guard<mutex> lock(mtx);
+        tareasFinalizadas.store(true);
+    }
+    cv.notify_all(); // Notificar a todos los hilos
+
+    // Unir los hilos
     for (auto& hilo : hilos) {
         hilo.join();
     }
 }
-
-
 
 
 int main(int argc, char* argv[]) {
@@ -115,7 +125,7 @@ int main(int argc, char* argv[]) {
     string carpetaMap = getenv("MAPA_ARCHIVOS");
     string stopWordPath = getenv("STOP_WORDS");
     int opcion;
-    vector<string> stopwords;
+    unordered_set<string> stopwords;
     extraerStopwords(stopwords,stopWordPath);
 
     if (numHilos > static_cast<int>(hilosDisponibles)){
@@ -123,8 +133,17 @@ int main(int argc, char* argv[]) {
         cout << "Programa finalizado" << endl;
         return 0;
     }
-    // Si PONES  ./app default se lanza este de inmediato
-    if (argc > 1 && string(argv[1]) == "default") {
+    
+    // Si ejecutamos como ./app3 -h 3  entonces, ejecutará el procesador con las stopwords con esa cantidad de hilos
+    if (argc > 2 && string(argv[1]) == "-h") {
+        numHilos = atoi(argv[2]); // Convertir el argumento a entero
+        cout << "Procesando archivos con " << numHilos << " hilos...\n" << endl;
+        procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos, stopwords);
+        cout << "El proceso de conteo de palabras ha finalizado.\n" << endl;
+        return 0;
+        // Aquí NO se genera el archivo con IDs
+
+    } else if (argc > 1 && string(argv[1]) == "default") {
         cout << "Ejecutando con valores por defecto." << endl;
         cout << "Procesando archivos con " << numHilos << " hilos...\n" << endl;
         procesarArchivosConHilos(extension, carpetaEntrada, carpetaSalida, numHilos,stopwords);

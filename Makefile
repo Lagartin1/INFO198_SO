@@ -10,6 +10,7 @@ SRC_DIR = src/
 APP2_DIR = src/ContarPalabras/
 APP3_DIR = src/ContarPalabras/
 APP4_DIR = src/IndiceInvertido/
+APP5_DIR = src/ContarPalabras/AnalisisPerformance/
 PLANIFICADOR_DIR = src/Planificator/
 SOCK_DIR = sockets/
 
@@ -18,9 +19,10 @@ MAIN_SRC = $(SRC_DIR)MainApp.cpp
 APP2_SRC = $(APP2_DIR)ContarPalabras.cpp $(APP2_DIR)ContarPalabrasUtils.cpp
 APP3_SRC = $(APP3_DIR)procesar_hilos.cpp $(APP3_DIR)ContarPalabrasUtils.cpp
 APP4_SRC = $(APP4_DIR)InvertedIndex.cpp
+APP5_SRC = $(APP5_DIR)EJECUTADOR.cpp # Agregado para app5 src\ContarPalabras\AnalisisPerformance\EJECUTADOR.cpp
 
 # Objetivos
-all: clean mkdir app app2 app3 app4 planificador distribuidor core
+all: clean mkdir app app2 app3 app4 app5 planificador distribuidor core
 
 # Compilación de la aplicación principal
 app:
@@ -30,12 +32,17 @@ app:
 app2:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app2 $(APP2_SRC)
 
-# compila el 3
+# Compilación de la aplicación app3
 app3:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app3 $(APP3_SRC)
 
+# Compilación de la aplicación app4
 app4:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app4 $(APP4_SRC)
+
+# Compilación de la aplicación app5
+app5:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)app5 $(APP5_SRC)
 
 # Compilación del planificador
 planificador:
@@ -49,7 +56,7 @@ distribuidor:
 core:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)core $(PLANIFICADOR_DIR)Core.cpp
 
-# Crear el directorio bin si no existe
+# Crear el directorio bin y sockets si no existen
 mkdir:
 	mkdir -p $(BIN_DIR)
 	mkdir -p $(SOCK_DIR)
