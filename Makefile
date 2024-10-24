@@ -2,9 +2,7 @@
 Comp = g++
 
 # Opciones del compilador
-# Opciones del compilador
 CFLAGS = -Wall -Wextra -std=c++17 -pthread -Iinclude
-
 
 # Directorios
 BIN_DIR = bin/
@@ -17,9 +15,10 @@ SOCK_DIR = sockets/
 
 # Archivos fuente
 MAIN_SRC = $(SRC_DIR)MainApp.cpp
-APP2_SRC = $(APP2_DIR)ContarPalabras.cpp $(APP2_DIR)ContarPalabrasUtils.cpp #Agregué ContarPalabrasUtils.cpp a la variable APP2_SRC, asegurando que todas las definiciones de funciones necesarias para ContarPalabras.cpp se incluyan en la compilación.
+APP2_SRC = $(APP2_DIR)ContarPalabras.cpp $(APP2_DIR)ContarPalabrasUtils.cpp
 APP3_SRC = $(APP3_DIR)procesar_hilos.cpp $(APP3_DIR)ContarPalabrasUtils.cpp
 APP4_SRC = $(APP4_DIR)InvertedIndex.cpp
+
 # Objetivos
 all: clean mkdir app app2 app3 app4 planificador distribuidor core
 
@@ -37,19 +36,24 @@ app3:
 
 app4:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)app4 $(APP4_SRC)
-# Crear el directorio bin si no existe
 
+# Compilación del planificador
 planificador:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)planificador $(PLANIFICADOR_DIR)Planificator.cpp
 
+# Compilación del distribuidor
 distribuidor:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)distribuidor $(PLANIFICADOR_DIR)Distributor.cpp
+
+# Compilación del core
 core:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)core $(PLANIFICADOR_DIR)Core.cpp
 
+# Crear el directorio bin si no existe
 mkdir:
 	mkdir -p $(BIN_DIR)
-	mkdrir -p $(SOCK_DIR)
+	mkdir -p $(SOCK_DIR)
+
 # Limpieza de archivos generados
 clean:
 	rm -rf $(BIN_DIR)*

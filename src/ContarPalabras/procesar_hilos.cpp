@@ -109,8 +109,8 @@ int main(int argc, char* argv[]) {
 
     // Estos datos hay que traerlos de variables de entorno
     string extension = ".txt";  
-    string carpetaEntrada = "../in/libros";
-    string carpetaSalida = "../out"; 
+    string carpetaEntrada = getenv("CARPETA_ENTRADA");
+    string carpetaSalida = getenv("CARPETA_SALIDA");
     int numHilos = stoi(getenv("CANTIDAD_THREAD")); 
     string carpetaMap = getenv("MAPA_ARCHIVOS");
     string stopWordPath = getenv("STOP_WORDS");
