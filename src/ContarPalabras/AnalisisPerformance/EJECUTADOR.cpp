@@ -58,10 +58,10 @@ int main() {
         cout << "Error: cantidad de repeticiones inferior a 2" << endl;
         return 0;
     }
-    string pathDatos = getenv("GRAPH_DATA");
+    string pathDatos = getenv("DATOS");
     
     // Abrir el archivo para escribir los datos
-    ofstream archivo("/home/vicntea/INFO198_SO/src/ContarPalabras/AnalisisPerformance/variablesEntorno/DATOS.txt", ios::trunc);
+    ofstream archivo( pathDatos.c_str(), ios::trunc);
 
     // Verificar si el archivo se abrió correctamente
     if (!archivo.is_open()) {
@@ -98,7 +98,7 @@ int main() {
 
     archivo.close();  // Cerrar el archivo
 
-    cout << "Análisis de rendimiento completado. Resultados guardados en DATOS.txt." << endl;
+    cout << "Análisis de rendimiento completado.\n Resultados guardados en "<< pathDatos << "." <<endl;
 
     int res = system(graphCommand.c_str());
     if (res == 0) {

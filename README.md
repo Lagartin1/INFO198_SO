@@ -2,18 +2,31 @@
 ## Descripcion
 Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por 10 opciones para usuarios genericos:
 detección de palíndromos, conteo de vocales, conteo de letras en un texto, cálculo del promedio y sumatoria de un vector, y 
-evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido,medidor de preformance, planificador . Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
+evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido, Analizador de preformance, planificador . Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
 línea de comandos para ejecutar las opciones correspondientes, como nombre de usuario, contraseña, frase de texto,
 vector de números, y un valor numérico.
 
 ## Requisitos
 Para compilar este programa en C++, se necesitan los siguientes elementos:
-
+-**Pyton 3**: Contar con Python 3.8 o superior, y ademas contar con la libreria `matplotlib`
 - **Compilador C**: GCC para compliar C++.
 - **Sistema Operativo**: Preferentemente Linux o cualquier sistema compatible con compiladores estándar de C.
 - **Bibliotecas estándar de C**: Asegúrate de tener instaladas las bibliotecas estándar necesarias para la entrada/salida y manejo de cadenas.
 - **Terminal**: Acceso a una terminal para compilar y ejecutar el programa utilizando línea de comandos.
 ## Instalacion / Compilacion
+
+Para instalar la libreria de Python matplotlib: 
+
+```bash
+      pip install matplotlib
+   ```
+en caso de no tener pip ,instalarlo de la siguiente forma y luego instalar mathplotlib de la forma anterior:
+```bash
+      sudo apt update
+      sudo apt install python3-pip
+   ```
+
+
 Para compilar el programa, sigue los siguientes pasos:
 
 1. Navega al directorio raíz del proyecto donde se encuentra el `Makefile`.
@@ -43,6 +56,15 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
     |PLANIFICADOR_OUT | es la ruta al archivo ejecutable de planificador|
     |INVERTED_OUT| es la ruta al archvio ejectuable de Indice invertido|
     |CANTIDAD_CORES| es la cantidad de cores que se usaran para el planificador|
+    |CARPETA_ENTRADA|es la ruta de la carpeta en donde estan los archivos con los que se contaran las palabras|
+    |CARPTA_SALIDA|es la ruta a la carpeta que contendra los archivos de salida del programa que cuenta las palabras|
+    |ARRAY_THREADS|array que contiene las cantidades de threads a utulizar para hacer los graficos de performances,las cantidades de threads deben ser separadas por coma (,)|
+    |DATOS|es la ruta al archivo que contendra los resutlados del las mediciones de rendimiento|
+    |GRAFICO|es la ruta a la carpeta en donde se guardara el grafico|
+    |GRAP_PYTHON_PATH|es la ruta al programa python que sera ejecutado para crear el grafico|
+    |REPETICIONES|es la cantidad de repeticiones por cada cantidad de threads del array de threads|
+    |PERFORMANCE_OUT| es la ruta al ejecutable del programa que hace el analisis de performance|
+    |COUNT_WITH_THREADS|es la ruta al ejecutable mas el parametro "-h" para poder ejecutarlo en el analisis de performance|
     
     al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe estar el la raiz del repositorio y ejecutar:
 
@@ -122,3 +144,9 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
    contiene la informacion de el resultado de el procesamiento de los procesos,de la siguiente forma:
 
    ( < id_core > ; < operacion >; < numero 1 >; < numero 2 > ) => < resultado >
+7.**DATOS.txt**
+   contiene la informacion de el analisis de performance donde sigue el siguiente formato:
+
+   < Cantidad de Threads > , < Tiempo de ejecucion > ; < Cantidad de Threads > , < Tiempo de ejecucion > , ... asi por cada elemento del array de theads
+
+   y cada linea hacia abajo son la cantidad de repeticiones.

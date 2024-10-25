@@ -60,7 +60,7 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             }
         }else if (option == "6") {
             cout<< "\n" <<endl;
-            string wordcount = getenv("COUNTWORD_OUT");
+            string wordcount = getenv("COUNTWORDS_OUT");
             int res = system(wordcount.c_str());
             if (res != 0){
                 cout << "Error al ejecutar el programa" << endl;
@@ -88,6 +88,13 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
                 cout << "Error: No se ha ejecutado la opcion (7) Contar palabras con hilo" << endl;
             }
             
+        }else if(option == "9"){
+            cout<< "\n" <<endl;
+            string performance = getenv("PERFORMANCE_OUT");
+            int res = system(performance.c_str());
+            if (res != 0){
+                cout << "Error al ejecutar el programa" << endl;
+            }
         }else if(option == "10"){
             cout<< "\n" <<endl;
             string planificador = getenv("PLANIFICADOR_OUT");
