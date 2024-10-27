@@ -20,6 +20,8 @@ export GRAFICO="/home/francisco/GitProyects/INFO198_SO/Data"
 export ARRAY_THREADS="1,2,4,8,16"
 export COUNT_WITH_THREADS="./app3 -h " #nueo
 export PERFORMANCE_OUT="./app5"
+export MEMORY_SIZE="30"
+export TOPK = "5"
 
 # export CARPETA_ENTRADA="/home/vicntea/INFO198_SO/in/libros"
 # export CARPETA_SALIDA="/home/vicntea/INFO198_SO/out"
@@ -54,3 +56,6 @@ export PERFORMANCE_OUT="./app5"
 # export REPETICIONES="5"
 # export GRAPH_DATA="/home/vicntea/INFO198_SO/src/ContarPalabras/AnalisisPerformance/variablesEntorno\DATOS.txt"
 # export GRAPH_PYTHON_PATH="/home/vicntea/INFO198_SO/src/ContarPalabras/AnalisisPerformance/ANALIZADOR.py"
+
+# export MEMORY_SIZE="30"
+# export TOPK = "5"

@@ -13,6 +13,7 @@ APP4_DIR = src/IndiceInvertido/
 APP5_DIR = src/ContarPalabras/AnalisisPerformance/
 PLANIFICADOR_DIR = src/Planificator/
 SOCK_DIR = sockets/
+BUSCADOR_DIR = src/Search/
 
 # Archivos fuente
 MAIN_SRC = $(SRC_DIR)MainApp.cpp
@@ -22,7 +23,7 @@ APP4_SRC = $(APP4_DIR)InvertedIndex.cpp
 APP5_SRC = $(APP5_DIR)EJECUTADOR.cpp # Agregado para app5 src\ContarPalabras\AnalisisPerformance\EJECUTADOR.cpp
 
 # Objetivos
-all: clean mkdir app app2 app3 app4 app5 planificador distribuidor core
+all: clean mkdir app app2 app3 app4 app5 planificador distribuidor core buscador cache engine
 
 # Compilación de la aplicación principal
 app:
@@ -57,6 +58,13 @@ core:
 	$(Comp) $(CFLAGS) -o $(BIN_DIR)core $(PLANIFICADOR_DIR)Core.cpp
 
 # Crear el directorio bin y sockets si no existen
+buscador:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)buscador $(BUSCADOR_DIR)Buscador.cpp
+cache:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)cache $(BUSCADOR_DIR)Cache.cpp
+engine:
+	$(Comp) $(CFLAGS) -o $(BIN_DIR)engine $(BUSCADOR_DIR)Engine.cpp
+
 mkdir:
 	mkdir -p $(BIN_DIR)
 	mkdir -p $(SOCK_DIR)
