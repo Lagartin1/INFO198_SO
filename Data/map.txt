@@ -3,18 +3,21 @@ Dan Brown - El Símbolo Perdido.txt,1
 J.K. Rowling - Harry Potter 4 - El Cáliz de Fuego.txt,2
 George Norman Lippert - James Potter 1 - La Encrucijada de los Mayores.txt,3
 C. S. Lewis - Las Crónicas de Narnia 7 - La Última Batalla.txt,4
-C. S. Lewis - Las Crónicas de Narnia 3 - La Travesia del Explorador del Amanecer.txt,5
-C. S. Lewis - Las Crónicas de Narnia 4 - La Silla de Plata.txt,6
-J.K. Rowling - Harry Potter 6 - El Misterio del Príncipe.txt,7
-Stephen King - The Dead Zone.txt,8
-C. S. Lewis - Las Crónicas de Narnia 6 - El Sobrino del Mago.txt,9
-C. S. Lewis - Las Crónicas de Narnia 2 - El Principe Caspian.txt,10
-J.K. Rowling - Harry Potter 1 - La Piedra Filosofal.txt,11
-J.K. Rowling - Harry Potter 7 - Las Reliquias de la Muerte.txt,12
-J.K. Rowling - Harry Potter 3 - El Prisionero de Azkaban.txt,13
-J.K. Rowling - Harry Potter 5 - La Orden del Fenix.txt,14
-C. S. Lewis - Las Crónicas de Narnia 1 - El León, la Bruja y el Ropero.txt,15
-J.M. Barrie - Peter Pan.txt,16
-C. S. Lewis - Las Crónicas de Narnia 5 - El Caballo y su Niño.txt,17
-Scott Fitzgerald - El extraño caso de Benjamin Button.txt,18
-J.K. Rowling - Harry Potter 2 - La Cámara Secreta.txt,19
+The Clean Coder-A Code of Conduct for Professional Programmers.txt,5
+C. S. Lewis - Las Crónicas de Narnia 3 - La Travesia del Explorador del Amanecer.txt,6
+C. S. Lewis - Las Crónicas de Narnia 4 - La Silla de Plata.txt,7
+J.K. Rowling - Harry Potter 6 - El Misterio del Príncipe.txt,8
+Stephen King - The Dead Zone.txt,9
+C. S. Lewis - Las Crónicas de Narnia 6 - El Sobrino del Mago.txt,10
+C. S. Lewis - Las Crónicas de Narnia 2 - El Principe Caspian.txt,11
+J.K. Rowling - Harry Potter 1 - La Piedra Filosofal.txt,12
+J.K. Rowling - Harry Potter 7 - Las Reliquias de la Muerte.txt,13
+DEEP WORK - RULES FOR FOCUSED SUCCESS IN A DISTRACTED WORLD - CAL NEWPORT .txt,14
+J.K. Rowling - Harry Potter 3 - El Prisionero de Azkaban.txt,15
+J.K. Rowling - Harry Potter 5 - La Orden del Fenix.txt,16
+C. S. Lewis - Las Crónicas de Narnia 1 - El León, la Bruja y el Ropero.txt,17
+Clean.Architecture.2017.9.txt,18
+J.M. Barrie - Peter Pan.txt,19
+C. S. Lewis - Las Crónicas de Narnia 5 - El Caballo y su Niño.txt,20
+Scott Fitzgerald - El extraño caso de Benjamin Button.txt,21
+J.K. Rowling - Harry Potter 2 - La Cámara Secreta.txt,22

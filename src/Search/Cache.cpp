@@ -67,23 +67,18 @@ string searchCache(vector<Pbusqueda> &cache,string palabra,int size){
             //llamar a motor de busqueda y  a cache
             for (int i = 0; i < size; i++){
                 if (cache[i].getPalabra() == palabra){
-                    cout << "Encontrado en cache" << endl;
                     return cache[i].getContenido();
                 }
             }
             respuesta = sendMessageToEngine(palabra);
             reemplazarMasAntiguo(cache,palabra,respuesta);
-            cout << "Reemplazando mas antiguo" << endl;
         }else{
             //llamar a motor de busqueda y añadir a cache
-            cout << "Añadiendo a cache" << endl;
             respuesta = sendMessageToEngine(palabra);
             agregarCache(cache,palabra,respuesta);
             //enviar respuesta a buscador
         }
     }else{
-        //llama a motor de busqueda agregar a cache
-        cout << "primer elemento" << endl;
         respuesta = sendMessageToEngine(palabra);
         agregarCache(cache,palabra,respuesta);
     }
@@ -188,7 +183,7 @@ int main() {
             string palabra = buffer;
             string rsp;
             if (palabra == "!!") {
-                //llamar a motor de busqueda para que termine mensaje será (extit)
+                //llamar a motor de busqueda para que termine mensaje será (!!)
                 sendMessageToEngine("!!");
                 send(client_fd, "success", 7, 0);
                 close(socket_fd);

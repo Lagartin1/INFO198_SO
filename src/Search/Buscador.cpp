@@ -6,17 +6,24 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <locale>
-
+#include <map>
+#include <cstring>
+#include <fstream>
 
 using namespace std;
 
 
-void search();
+void leerMAP(map<string,string> &map, string mpPath);
+void desempaquetar(string resultdado,map<string,string> &mp);
+void search(map<string,string> &mp);
 bool isExtit(string search);
-
+string sendMessageToCache(string texto);
 
 int main() {
     locale::global(locale("es_ES.UTF-8"));
+    string mpPath = getenv("MAPA_ARCHIVOS");
+    map<string,string> mp;
+    leerMAP(mp,mpPath);
     pid_t pid = fork();
     if (pid < 0) {
         cerr << "Error al crear el proceso hijo" << endl;
@@ -31,7 +38,7 @@ int main() {
         cout << "================================="<< endl;;
         cout << "Escribe 'salir ahora' para salir" << endl;
         while (true){
-            search();
+            search(mp);
         }
     }
 }
@@ -43,7 +50,7 @@ bool isExtit(string search){
 }
 
 
-void sendMessageToCache(string texto){
+string sendMessageToCache(string texto){
     //enviar mensaje a cache
     int socket_fd;
     struct  sockaddr_in server_addr;
@@ -71,15 +78,16 @@ void sendMessageToCache(string texto){
     buffer[bytes_received] = '\0';
     string contenido = buffer;
     if (contenido != "success"){
-        cout << "Resultado: " << contenido << endl;
+        cout << "Resultado: " << endl;
+        close(socket_fd);
+        return contenido;
     }
     close(socket_fd);
-
-    
+    return "";
 }
-void search(){
+void search(map<string,string> &mp){
     cout << "Buscar -> ";
-    string search;
+    string search,respuesta;
     getline(cin,search);
     if (isExtit(search)){
         // llamar a cache para que termine mensaje será (exit)
@@ -89,7 +97,44 @@ void search(){
         exit(EXIT_SUCCESS);
     }else{
         //llamar a cache y mostrar contenido
-        sendMessageToCache(search);
+        respuesta = sendMessageToCache(search);
+        desempaquetar(respuesta,mp);
     }
     cout << endl;
+}
+
+
+void desempaquetar(string resultado,map<string,string> &mp){
+    if (resultado != "-1"){
+        istringstream iss(resultado);
+        string palabra;
+        int ln = 1;
+        while (getline(iss,palabra,';')){
+            palabra.erase(0,1);
+            size_t pos = palabra.find(',');
+            string id = palabra.substr(0,pos);
+            string cant = palabra.substr(pos+1);
+            cant.pop_back();
+            cout <<"("<< ln++ <<") Puntaje: " << cant << " -  " << mp[id] << endl;
+        }
+    }else{
+        cout << "No se encontraron resultados" << endl;
+    }
+}
+
+
+void leerMAP(map<string,string> &map, string mpPath){
+    ifstream file(mpPath);
+    string line;
+    while (getline(file,line)){
+        size_t pos = line.find_last_of(',');
+        if (pos != string::npos) {
+            // El nombre del archivo es desde el inicio hasta la última coma
+            string nombre = line.substr(0, pos);
+            // El ID es desde la posición después de la última coma hasta el final de la línea
+            string id = line.substr(pos + 1);
+            map[id] = nombre;
+        }
+    }
+    file.close();
 }

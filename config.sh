@@ -1,5 +1,5 @@
 export TXT_FILE_PATH="/home/francisco/GitProyects/INFO198_SO/Data/Users.txt"
-export MAPA_ARCHIVOS="/home/francisco/GitProyects/INFO198_SO/Data"
+export MAPA_ARCHIVOS="/home/francisco/GitProyects/INFO198_SO/Data/map.txt"
 export STOP_WORDS="/home/francisco/GitProyects/INFO198_SO/Data/stop_words.txt"
 export INVERTED_INDEX="/home/francisco/GitProyects/INFO198_SO/Data/index.INDEX"
 export CANTIDAD_THREAD="3"
@@ -21,7 +21,7 @@ export ARRAY_THREADS="1,2,4,8,16"
 export COUNT_WITH_THREADS="./app3 -h " #nueo
 export PERFORMANCE_OUT="./app5"
 export MEMORY_SIZE="30"
-export TOPK = "5"
+export TOPK="5"
 
 # export CARPETA_ENTRADA="/home/vicntea/INFO198_SO/in/libros"
 # export CARPETA_SALIDA="/home/vicntea/INFO198_SO/out"

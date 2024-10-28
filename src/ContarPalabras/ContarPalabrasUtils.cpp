@@ -70,7 +70,7 @@ void procesarArchivo(string pathIN,string name, string pathOut){
 
 void generarArchivoConIDs(const std::string& carpetaEntrada, const std::string& carpetaSalida, const std::string& extension) {
     // Construir la ruta completa del archivo de salida en la carpeta de salida
-    std::string archivoSalida = carpetaSalida + "/map.txt";
+    std::string archivoSalida = carpetaSalida;
     
     // Eliminar el archivo existente si existe
     std::remove(archivoSalida.c_str());
