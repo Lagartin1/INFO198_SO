@@ -75,11 +75,7 @@ int main() {
 
             // palabra_
             // palabra1_palabra2 
-            if ((palabra.find(' ')!= string::npos) && palabra.size()){
-                respuesta = palabraCompuesta(palabra,pathIndex,topk);
-            }else{ 
-                respuesta = response(resultado(palabra, pathIndex),topk);
-            }
+            respuesta = palabraCompuesta(palabra,pathIndex,topk);
             send(client_fd, respuesta.c_str(), respuesta.size(), 0);
             close(client_fd);
         }
@@ -139,7 +135,7 @@ string palabraCompuesta(string palabra, string &pathIndex,int topk){
         return "-1";
     }
     map<string,int> resp;
-    for(int i = 0;i< static_cast<int>(respuestas.size()) ;i++){
+    for(int i = 0;i< static_cast<int>(respuestas.size())  ;i++){
         string t,id,cant;
         istringstream iss2(respuestas[i]);
         while( getline(iss2,t,';')){
@@ -161,8 +157,13 @@ string palabraCompuesta(string palabra, string &pathIndex,int topk){
     });
     
     string respond = "";
+    int i = 0;
     for(const auto& par : elementos){
             respond+= '(' + par.first + ',' + to_string(par.second) + ");";
+            i++;
+            if (i == topk){
+                break;
+            }
     }
     return respond;
 }

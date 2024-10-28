@@ -103,7 +103,6 @@ void search(map<string,string> &mp){
     cout << endl;
 }
 
-
 void desempaquetar(string resultado,map<string,string> &mp){
     if (resultado != "-1"){
         istringstream iss(resultado);
