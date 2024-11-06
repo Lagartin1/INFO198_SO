@@ -20,6 +20,7 @@ export GRAFICO="/home/francisco/GitProyects/INFO198_SO/Data"
 export ARRAY_THREADS="1,2,4,8,16"
 export COUNT_WITH_THREADS="./app3 -h " #nueo
 export PERFORMANCE_OUT="./app5"
+export SEARCH_OUT="./buscador"
 export MEMORY_SIZE="30"
 export TOPK="5"
 

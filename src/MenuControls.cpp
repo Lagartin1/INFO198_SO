@@ -32,6 +32,7 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             cout << "12. Agregar usuario" << endl;
             cout << "13. Eliminar usuario" << endl;
         }
+        cout << "20. Buscador"<<endl;
         cout << "Ingrese una opcion: ";
         getline(cin, option);
         if (option == "0") {
@@ -95,6 +96,10 @@ void menu(string& text, string v, string& num, Usuario user,map<string, Usuario>
             if (res != 0){
                 cout << "Error al ejecutar el programa" << endl;
             }
+        }else if(option == "20"){
+            cout<< "\n" <<endl;
+            string buscador = getenv("SEARCH_OUT");
+            system(buscador.c_str());
         }else if(option == "10"){
             cout<< "\n" <<endl;
             string planificador = getenv("PLANIFICADOR_OUT");

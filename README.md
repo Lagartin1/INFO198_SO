@@ -2,13 +2,13 @@
 ## Descripcion
 Este programa es un sistema que permite a los usuarios interactuar con un menú personalizado compuesto por 10 opciones para usuarios genericos:
 detección de palíndromos, conteo de vocales, conteo de letras en un texto, cálculo del promedio y sumatoria de un vector, y 
-evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido, Analizador de preformance, planificador . Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
+evaluación de la función f(x) = 5x^2 + 1/x, conteo de palabras sobre documentos en un directorio,conteo de palabras de documentos sobre un directorio usando threads y creacion de un indice invertido, Analizador de preformance, planificador,buscador de palabras. Ademas cuenta con opciones para usuarios Admin: listar usuarios,agregar usuarios,eliminar usuarios. El usuario proporciona los datos necesarios mediante argumentos de 
 línea de comandos para ejecutar las opciones correspondientes, como nombre de usuario, contraseña, frase de texto,
 vector de números, y un valor numérico.
 
 ## Requisitos
 Para compilar este programa en C++, se necesitan los siguientes elementos:
--**Pyton 3**: Contar con Python 3.8 o superior, y ademas contar con la libreria `matplotlib`
+- **Python 3**: Contar con Python 3.8 o superior, y ademas contar con la libreria `matplotlib`
 - **Compilador C**: GCC para compliar C++.
 - **Sistema Operativo**: Preferentemente Linux o cualquier sistema compatible con compiladores estándar de C.
 - **Bibliotecas estándar de C**: Asegúrate de tener instaladas las bibliotecas estándar necesarias para la entrada/salida y manejo de cadenas.
@@ -65,6 +65,7 @@ Una vez que el programa ha sido compilado correctamente, puedes ejecutarlo desde
     |REPETICIONES|es la cantidad de repeticiones por cada cantidad de threads del array de threads|
     |PERFORMANCE_OUT| es la ruta al ejecutable del programa que hace el analisis de performance|
     |COUNT_WITH_THREADS|es la ruta al ejecutable mas el parametro "-h" para poder ejecutarlo en el analisis de performance|
+    |SEARCH_OUT|es la ruta al ejecutable del programa que busca palabras en los archivos|
     
     al modificar se debe dar permisos de ejecucion y luego cargarlo al bash el programa,se debe estar el la raiz del repositorio y ejecutar:
 
